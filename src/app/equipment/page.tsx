@@ -2,41 +2,41 @@
 import Head from "next/head";
 import React, { useEffect, useState } from "react";
 import { CategoryBanner } from "../custom-components/CategoryBanner/CategoryBanner";
-import { fetchTarget } from "@/api/exercises/target";
+import { fetchEquipment } from "@/api/exercises/equipment";
 
-export default function TargetPage() {
+export default function EquipmentPage() {
 
-    const [targetsData, setTargetsData] = useState<any[]>()
+    const [equipmentData, setEquipmentData] = useState<any[]>()
     const [error, setError] = useState(false)
     const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
-        const getTargets = async () => {
+        const getEquipment = async () => {
             try {
-                const data = await fetchTarget()
-                setTargetsData(data)
+                const data = await fetchEquipment()
+                setEquipmentData(data)
             } catch (e) {
                 setError(true)
             } finally {
                 setIsLoading(false)
             }
         }
-        getTargets()
+        getEquipment()
     }, [])
     return (
         <>
             <Head>
-                <title>Targets</title>
+                <title>Equipments</title>
             </Head>
             <div className="pb-10">
                 <div className="items-center sm:items-start min-h-screen">
-                    <CategoryBanner title="Targets" />
-                    This is the target page
+                    <CategoryBanner title="Equipment" />
+                    This is the equipment page
                     {isLoading && <>LOADING EXERCISES</>}
-                    {error && <>THERE WAS AN ERROR WHILE FETCHING TARGETS</>}
-                    {targetsData && targetsData.length > 0 && (
+                    {error && <>THERE WAS AN ERROR WHILE FETCHING EQUIPMENT</>}
+                    {equipmentData && equipmentData.length > 0 && (
                         <>
-                            {targetsData.map((item) => {
+                            {equipmentData.map((item) => {
                                 return (
                                     <p>{item}</p>
                                 )

@@ -2,41 +2,41 @@
 import Head from "next/head";
 import React, { useEffect, useState } from "react";
 import { CategoryBanner } from "../custom-components/CategoryBanner/CategoryBanner";
-import { fetchTarget } from "@/api/exercises/target";
+import { fetchBodyParts } from "@/api/exercises/body-parts";
 
-export default function TargetPage() {
+export default function BodyPartsPage() {
 
-    const [targetsData, setTargetsData] = useState<any[]>()
+    const [bodyPartsData, setBodyPartsData] = useState<any[]>()
     const [error, setError] = useState(false)
     const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
-        const getTargets = async () => {
+        const getBodyParts = async () => {
             try {
-                const data = await fetchTarget()
-                setTargetsData(data)
+                const data = await fetchBodyParts()
+                setBodyPartsData(data)
             } catch (e) {
                 setError(true)
             } finally {
                 setIsLoading(false)
             }
         }
-        getTargets()
+        getBodyParts()
     }, [])
     return (
         <>
             <Head>
-                <title>Targets</title>
+                <title>Body Parts</title>
             </Head>
             <div className="pb-10">
                 <div className="items-center sm:items-start min-h-screen">
-                    <CategoryBanner title="Targets" />
-                    This is the target page
+                    <CategoryBanner title="Body Parts" />
+                    This is the body parts page
                     {isLoading && <>LOADING EXERCISES</>}
-                    {error && <>THERE WAS AN ERROR WHILE FETCHING TARGETS</>}
-                    {targetsData && targetsData.length > 0 && (
+                    {error && <>THERE WAS AN ERROR WHILE FETCHING BODY PARTS</>}
+                    {bodyPartsData && bodyPartsData.length > 0 && (
                         <>
-                            {targetsData.map((item) => {
+                            {bodyPartsData.map((item) => {
                                 return (
                                     <p>{item}</p>
                                 )

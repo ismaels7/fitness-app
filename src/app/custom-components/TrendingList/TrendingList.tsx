@@ -1,4 +1,4 @@
-import { DataListItem, DataList, Icon, Box, GridItem, Heading } from "@chakra-ui/react"
+import { Icon, Box, GridItem, Heading } from "@chakra-ui/react"
 import { FaAngleRight } from "react-icons/fa6"
 
 type ItemListType = {
@@ -11,7 +11,7 @@ type TrendingListProps = {
 }
 export const TrendingList = ({ list }: TrendingListProps) => {
     return (
-        <GridItem >
+        <GridItem>
             <Heading display={"flex"} justifyContent={"center"} alignItems={"center"} >Trending exercses</Heading>
             <Box display={"flex"} justifyContent={"center"} alignItems={"center"} height={"100%"}>
                 <div>

@@ -1,13 +1,16 @@
+"use-client"
 import { Box, Button, Heading, Text } from "@chakra-ui/react"
+import React from "react"
+import Link from "next/link"
 
 export const Banner = () => {
     return (
         <Box className="gradient-background" w='100%' opacity={1} backgroundPosition={"center"} h={"600px"} textAlign={"center"} justifyContent={"center"} color={"white"} paddingTop={"10%"}>
-            <Heading fontSize={{ base:"", md:"4x1"}} mb={4}>Find your exercises</Heading>
-            <Text fontSize={{base: "md", md:"lg"}} mb={6}>
+            <Heading fontSize={{ base:"4xl", md:"6xl"}} mb={4}>Find your exercises</Heading>
+            <Text marginTop={"30px"} fontSize={{base: "md", md:"xl"}} mb={6}>
                 Explore through a large exercises variety to reach your goal!
             </Text>
-            <Button size={"lg"} colorPalette={"pink"} color={"white"} onClick={()=> alert("All exercises")}>Browse all exercises</Button>
+            <Link href="/exercises"><Button size={"lg"} colorPalette={"pink"} color={"white"}>Browse all exercises</Button></Link>
         </Box>
     )
 }

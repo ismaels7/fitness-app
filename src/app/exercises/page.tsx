@@ -1,9 +1,11 @@
 "use client";
 import { fetchExercises } from "@/api/exercises/basic";
 import Head from "next/head";
+import React from "react";
 import { useEffect, useState } from "react";
+import { ExerciseCard } from "../custom-components/ExerciseCard/ExerciseCard";
 
-export default function ExercisestPage() {
+export default function ExercisesPage() {
     const [exercisesData, setExercisesData] = useState<any[]>()
     const [error, setError] = useState(false)
     const [isLoading, setIsLoading] = useState(true)
@@ -24,13 +26,14 @@ export default function ExercisestPage() {
         getExercises()
     }, [])
 
-    useEffect(()=> {console.log('isLoading', isLoading)}, [isLoading])
     return (
         <>
             <Head>
                 <title>Exercises</title>
             </Head>
-            <div className="">
+            <div className="pb-10">
+                <div className="items-center sm:items-start min-h-screen">
+
                 This si the exercises page
                 {isLoading && <>LOADING EXERCISES</>}
                 {error && <>THERE WAS AN ERROR WHILE FETCHING EXERCISES</>}
@@ -38,13 +41,12 @@ export default function ExercisestPage() {
                     <>
                         {exercisesData.map((e) => {
                             return (
-                                <div key={e.id}>
-                                    <p>{e.name}</p>
-                                    <img src={e.gifUrl}></img>
-                                </div>
+                                <ExerciseCard id={e.id} name={e.name} src={e.gifUrl} />
+
                             )
                         })}</>
                 )}
+                </div>
             </div>
         </>
     )
