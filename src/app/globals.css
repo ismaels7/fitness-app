@@ -1,21 +1,41 @@
-@tailwind base;
+
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
+  --background:rgb(245, 226, 234);
   --foreground: #171717;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
-    --foreground: #ededed;
+    --foreground: rgb(245, 226, 234);
   }
+}
+.gradient-background {
+  background-image: linear-gradient(to right, #cc2b5e, #753a88);
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+.global-container {
+  margin: 0 auto;
+  background-color: rgb(245, 226, 234);
+}
+
+.content-container {
+  height: 100%;
+}
+
+.categoryTile:hover {
+  transform: translateY(-5px);
+  transition: all 0.3s;
+  box-shadow:
+    0 4px 8px #0000001a,
+    0 12px 16px #0000001a;
 }
