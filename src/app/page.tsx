@@ -1,25 +1,30 @@
 "use client";
-import { Banner } from "@/ui/custom-components/Banner/Banner";
-import { CategoryTile } from "@/ui/custom-components/CategoryTile/CategoryTile";
-import { TrendingList } from "@/ui/custom-components/TrendingList/TrendingList";
+
 import { Box, Grid, GridItem } from "@chakra-ui/react";
 import Image from "next/image";
+import { Banner } from "./custom-components/Banner/Banner";
+import React from "react";
+import { CategoryTile } from "./custom-components/CategoryTile/CategoryTile";
+import { TrendingList } from "./custom-components/TrendingList/TrendingList";
 
 const categories = [
   {
     id: 1,
-    title: "Body part",
-    summary: "Decide which body part you want to train an start training it!"
+    title: "Body parts",
+    summary: "Decide which body part you want to train an start training it!",
+    url:"/body-parts"
   },
   {
     id: 2,
-    title: "Target",
-    summary: "Decide which body part you want to train an start training it!"
+    title: "Targets",
+    summary: "Decide which body part you want to train an start training it!",
+    url:"/targets"
   },
   {
     id: 3,
     title: "Equipment",
-    summary: "Decide which body part you want to train an start training it!"
+    summary: "Decide which body part you want to train an start training it!",
+    url:"/equipment"
   }
 ]
 
@@ -35,7 +40,7 @@ export default function Home() {
         <div className="grid grid-cols-1 gap-5 mx-8 my-20 md:grid-cols-2 lg:grid-cols-3">
           {categories.map((category) => {
             return (
-              <CategoryTile key={category.id} title={category.title} summary={category.summary} />
+              <CategoryTile key={category.id} title={category.title} summary={category.summary} url={category.url} />
             )
           })}
         </div>

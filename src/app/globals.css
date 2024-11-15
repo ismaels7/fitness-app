@@ -10,7 +10,7 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
-    --foreground: rgb(245, 226, 234);
+    --foreground: rgb(0, 0, 0);
   }
 }
 .gradient-background {
