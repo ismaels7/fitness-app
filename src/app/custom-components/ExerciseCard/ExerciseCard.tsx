@@ -1,30 +1,38 @@
-import { Card, Button, Image, Separator } from "@chakra-ui/react"
+import { Card, Button, Image, Box, HStack, Badge } from "@chakra-ui/react"
+import { useRouter } from "next/navigation"
 
 interface ExerciseCardProps {
-    id: string,
-    name: string,
-    src: string,
+  id: string,
+  name: string,
+  src: string,
 
 }
-export const ExerciseCard = ({id, name, src}: ExerciseCardProps) => {
-    return (
-        <Card.Root key={id} maxW="sm" overflow="hidden" m={4}>
-        <Image
-          src={src}
-          alt={name}
-        />
-        <Separator/>
-        <Card.Body gap="2">
-          <Card.Title>{name}</Card.Title>
-          <Card.Description>
-            This sofa is perfect for modern tropical spaces, baroque inspired
-            spaces.
-          </Card.Description>
+export const ExerciseCard = ({ id, name, src }: ExerciseCardProps) => {
+  const router = useRouter()
+  function formatTitle(title: string) {
+    return title.charAt(0).toLocaleUpperCase() + title.slice(1)
+  }
+  return (
+    <Card.Root key={id} className="customTile" flexDirection="row" overflow="hidden" maxW="lg" p={"5px"}>
+      <Image
+        objectFit="cover"
+        maxW="200px"
+        src={src}
+        alt={name}
+      />
+      <Box>
+        <Card.Body>
+          <Card.Title mb="2">{formatTitle(name)}</Card.Title>
+          <HStack mt="4">
+            <Badge colorPalette={"cyan"}>Glutes</Badge>
+            <Badge colorPalette={"teal"}>Biceps</Badge>
+            <Badge>Rope</Badge>
+          </HStack>
         </Card.Body>
-        <Card.Footer gap="2">
-          <Button variant="solid">Show Instructions</Button>
-          <Button variant="ghost">Check equipment</Button>
+        <Card.Footer>
+          <Button onClick={() => router.push(`/exercises/${id}`)}>Check details</Button>
         </Card.Footer>
-      </Card.Root>
-    )
+      </Box>
+    </Card.Root>
+  )
 }

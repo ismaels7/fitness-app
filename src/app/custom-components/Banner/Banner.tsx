@@ -10,7 +10,7 @@ export const Banner = () => {
             <Text marginTop={"30px"} fontSize={{base: "md", md:"xl"}} mb={6}>
                 Explore through a large exercises variety to reach your goal!
             </Text>
-            <Link href="/exercises"><Button size={"lg"} colorPalette={"pink"} color={"white"}>Browse all exercises</Button></Link>
+            <Link href="/exercises"><Button size={"lg"} colorPalette={"cyan"} color={"white"}>Browse all exercises</Button></Link>
         </Box>
     )
 }

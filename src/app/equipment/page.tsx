@@ -9,6 +9,10 @@ export default function EquipmentPage() {
     const [equipmentData, setEquipmentData] = useState<any[]>()
     const [error, setError] = useState(false)
     const [isLoading, setIsLoading] = useState(true)
+    const categoryData = {
+        name: "Equipment",
+        url: "/equipment"
+    }
 
     useEffect(() => {
         const getEquipment = async () => {
@@ -30,7 +34,7 @@ export default function EquipmentPage() {
             </Head>
             <div className="pb-10">
                 <div className="items-center sm:items-start min-h-screen">
-                    <CategoryBanner title="Equipment" />
+                    <CategoryBanner category={categoryData} />
                     This is the equipment page
                     {isLoading && <>LOADING EXERCISES</>}
                     {error && <>THERE WAS AN ERROR WHILE FETCHING EQUIPMENT</>}
