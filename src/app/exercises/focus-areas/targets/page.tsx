@@ -1,42 +1,46 @@
 "use client";
 import Head from "next/head";
 import React, { useEffect, useState } from "react";
-import { CategoryBanner } from "../custom-components/CategoryBanner/CategoryBanner";
-import { fetchBodyParts } from "@/api/exercises/body-parts";
+import { CategoryBanner } from "../../../custom-components/CategoryBanner/CategoryBanner";
+import { fetchTarget } from "@/api/exercises/target";
 
-export default function BodyPartsPage() {
+export default function TargetPage() {
 
-    const [bodyPartsData, setBodyPartsData] = useState<any[]>()
+    const [targetsData, setTargetsData] = useState<any[]>()
     const [error, setError] = useState(false)
     const [isLoading, setIsLoading] = useState(true)
+    const categoryData = {
+        name: "Targets",
+        url: "/targets"
+    }
 
     useEffect(() => {
-        const getBodyParts = async () => {
+        const getTargets = async () => {
             try {
-                const data = await fetchBodyParts()
-                setBodyPartsData(data)
+                const data = await fetchTarget()
+                setTargetsData(data)
             } catch (e) {
                 setError(true)
             } finally {
                 setIsLoading(false)
             }
         }
-        getBodyParts()
+        getTargets()
     }, [])
     return (
         <>
             <Head>
-                <title>Body Parts</title>
+                <title>Targets</title>
             </Head>
             <div className="pb-10">
                 <div className="items-center sm:items-start min-h-screen">
-                    <CategoryBanner title="Body Parts" />
-                    This is the body parts page
+                    <CategoryBanner category={categoryData}/>
+                    This is the target page
                     {isLoading && <>LOADING EXERCISES</>}
-                    {error && <>THERE WAS AN ERROR WHILE FETCHING BODY PARTS</>}
-                    {bodyPartsData && bodyPartsData.length > 0 && (
+                    {error && <>THERE WAS AN ERROR WHILE FETCHING TARGETS</>}
+                    {targetsData && targetsData.length > 0 && (
                         <>
-                            {bodyPartsData.map((item) => {
+                            {targetsData.map((item) => {
                                 return (
                                     <p>{item}</p>
                                 )

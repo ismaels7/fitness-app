@@ -14,7 +14,11 @@
   }
 }
 .gradient-background {
-  background-image: linear-gradient(to right, #cc2b5e, #753a88);
+  background-image: linear-gradient(to right, #000000, #054859);
+}
+
+.skeleton {
+  background-color: #c0d6db;
 }
 
 body {
@@ -25,14 +29,14 @@ body {
 
 .global-container {
   margin: 0 auto;
-  background-color: rgb(245, 226, 234);
+  background-color: #efecec;
 }
 
 .content-container {
   height: 100%;
 }
 
-.categoryTile:hover {
+.customTile:hover {
   transform: translateY(-5px);
   transition: all 0.3s;
   box-shadow:

@@ -10,15 +10,15 @@ import { TrendingList } from "./custom-components/TrendingList/TrendingList";
 const categories = [
   {
     id: 1,
-    title: "Body parts",
-    summary: "Decide which body part you want to train an start training it!",
-    url:"/body-parts"
+    title: "Focus Areas",
+    summary: "Decide which area you want to focus on!",
+    url:"/exercises/focus-areas"
   },
   {
     id: 2,
     title: "Targets",
     summary: "Decide which body part you want to train an start training it!",
-    url:"/targets"
+    url:"/exercises/focus-areas/targets"
   },
   {
     id: 3,

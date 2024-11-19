@@ -11,14 +11,14 @@ type CategoryType = {
 }
 export const CategoryTile = ({ title, summary, url }: CategoryType) => {
     return (
-        <LinkBox as="article" className="categoryTile" minW="4/12" p="5" borderWidth="2px" borderColor={"black"} rounded="md">
+        <LinkBox as="article" className="customTile" minW="4/12" p="5" borderWidth="2px" borderColor={"black"} rounded="md">
             <Heading size="lg" my="2">
                 <LinkOverlay>{title}</LinkOverlay>
             </Heading>
             {summary && <Text mb="3" color="fg.muted">
                 {summary}
             </Text>}
-            <Link href={url} className="inline-flex items-center underline text-rose-700">
+            <Link href={url} className="inline-flex items-center underline text-cyan-700">
                 Go there <FaAngleRight />
             </Link>
         </LinkBox>

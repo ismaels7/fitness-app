@@ -1,19 +1,22 @@
 import { Box, Heading, Link } from "@chakra-ui/react"
 
 interface CategoryBannerProps {
-    title: string
+    category: {
+        name: string,
+        url: string
+    }
 }
-export const CategoryBanner = ({title}: CategoryBannerProps) => {
-    const categories = ["Body Parts", "Targets", "Equipment"]
-    const otherCategories =  categories.filter((i) => i.toLowerCase() !== title.split(" ").join("").toLowerCase())
-
+export const CategoryBanner = ({category}: CategoryBannerProps) => {
+    const categories = [{name: "Exercises", url: "/exercises"}, /* {name: "Focus Areas", url: "focus-areas"}, */ {name: "Equipment", url: "/equipment"}]
     return (
-        <Box className="gradient-background" w='100%' display={"flex"} opacity={1} backgroundPosition={"center"} h={"75px"} textAlign={"left"} color={"white"} p={"20px"}>
-        <Heading fontSize={{ base:"4xl", md:"6xl"}} mb={4}>{title}</Heading>
-        <Link href="/"><Heading marginTop={"5px"} marginLeft={"20px"} fontSize={{ base:"lg", md:"xl"}} mb={4}>Home</Heading></Link>
-        {otherCategories.map((e) => (
-            <Link href={e}><Heading marginTop={"5px"} marginLeft={"20px"} fontSize={{ base:"lg", md:"xl"}} mb={4}>{e}</Heading></Link>
-        ))}
+        <Box className="gradient-background" w='100%' gap={5} display={"flex"} opacity={1} backgroundPosition={"center"} h={"100px"} alignItems={"center"} textAlign={"left"} color={"white"} paddingTop={"10px"} paddingInline={"10px"}>
+        <Heading fontSize={{ base:"4xl", md:"6xl"}} mb={4}>App Name</Heading>
+        <Link href="/"><Heading color={"white"} 
+            marginTop={"5px"} fontSize={{ base:"lg", md:"xl"}} mb={4}>Home</Heading></Link>
+        {categories.map((e) => {
+           return ( <Link href={e.url}><Heading color={window.location.pathname.startsWith(e.url) ? "cyan.500" : "white"} 
+            marginTop={"5px"} fontSize={{ base:"lg", md:"xl"}} mb={4}>{e.name}</Heading></Link>)
+})}
     </Box>
     )
 }
