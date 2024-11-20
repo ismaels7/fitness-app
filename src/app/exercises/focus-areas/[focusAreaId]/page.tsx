@@ -1,9 +1,10 @@
 "use client"
 import { fetchExerciseByBodyPart } from "@/api/exercises/body-parts";
 import { AdvancedCard } from "@/app/custom-components/AdvancedCard/AdvancedCard";
-import {  Skeleton, Stack, Grid, Heading } from "@chakra-ui/react";
+import { Grid, Heading } from "@chakra-ui/react";
 import Head from "next/head";
 import React, { use, useEffect, useState } from "react";
+import { formatTitle, loadingState } from "../../../utils/functions";
 
 
 export default function ExerciseByAreaPage({ params }: { params: Promise<{ focusAreaId: string }> }) {
@@ -24,19 +25,9 @@ export default function ExerciseByAreaPage({ params }: { params: Promise<{ focus
   }
 
   useEffect(() => {
-
     getExercise()
   }, [focusAreaId])
 
-  const loadingState = <>
-    <Stack>
-      <Skeleton className="skeleton" height="400px" marginInline={"80px"} width={"700px"} />
-    </Stack>
-  </>
-
-function formatId(title: string) {
-  return decodeURI(title.charAt(0).toUpperCase() + title.slice(1))
-}
 
 
   return (
@@ -45,14 +36,14 @@ function formatId(title: string) {
         <title>By Area</title>
       </Head>
       <div className="pb-10">
-        {/* TOD: show heading 'area: back '(for example) */}
         <div className="items-center min-h-screen">
-        <Heading size={"4xl"}>{formatId(focusAreaId)} Exercises</Heading>
+          {/* TOD: show heading 'area: back '(for example) */}
+          <Heading size={"4xl"}>{formatTitle(focusAreaId)} Exercises</Heading>
           <Grid p={10} alignContent={"center"} justifyContent={"center"}>
-            {isLoading && loadingState}
+            {isLoading && loadingState({ items: 4, grid: 12, colSpan: 12, width: "700px", height: "500px" })}
             {error && <>THERE WAS AN ERROR WHILE FETCHING EXERCISES</>}
             {exerciseData && exerciseData.map((exercise: any) => {
-              return <AdvancedCard key={exercise.name} exercise={exercise}/>
+              return <AdvancedCard key={exercise.name} exercise={exercise} />
             })}
           </Grid>
         </div>

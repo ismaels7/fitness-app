@@ -2,8 +2,8 @@
 import Head from "next/head";
 import React, { useEffect, useState } from "react";
 import { fetchTargets } from "@/api/exercises/target";
-import { Skeleton, Stack } from "@chakra-ui/react";
 import { BasicCard } from "@/app/custom-components/BasicCard/BasicCard";
+import { loadingState } from "../../../utils/functions";
 
 export default function TargetPage() {
 
@@ -27,16 +27,6 @@ export default function TargetPage() {
         getTargets()
     }, [])
 
-    const loadingState = <>
-        {Array(12)
-            .fill(null)
-            .map((_, index) => (
-                <Stack key={index} maxW="xs">
-                    <Skeleton className="skeleton" height="70px" marginInline={"80px"} width={"300px"} />
-                </Stack>
-            ))}
-    </>
-
     return (
         <>
             <Head>
@@ -45,8 +35,10 @@ export default function TargetPage() {
             <div className="pb-10">
                 <div className="items-center sm:items-start min-h-screen">
                     {error && <>THERE WAS AN ERROR WHILE FETCHING BODY PARTS</>}
+                        <div className="ml-20 pt-10">
+                        {isLoading && loadingState({items: 12, grid: 4})}
+                        </div>
                     <div className="grid grid-cols-1 gap-5 mx-8 my-20 md:grid-cols-2 lg:grid-cols-4">
-                        {isLoading && loadingState}
                         {targetsData && targetsData.length > 0 && (
                             <>
                                 {targetsData.map((item: string) => {

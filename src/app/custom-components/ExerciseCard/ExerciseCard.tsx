@@ -2,15 +2,14 @@ import { Card, Button, Image, Box, HStack, Badge } from "@chakra-ui/react"
 import { useRouter } from "next/navigation"
 import React from "react"
 import { FaLocationCrosshairs, FaRegHandBackFist, FaSuitcase } from "react-icons/fa6"
+import { formatTitle } from "../../utils/functions"
 
 interface ExerciseCardProps {
   exercise: any
 }
 export const ExerciseCard = ({ exercise }: ExerciseCardProps) => {
   const router = useRouter()
-  function formatTitle(title: string) {
-    return title.charAt(0).toUpperCase() + title.slice(1)
-  }
+
   return (
     <Card.Root key={exercise.id} className="customTile" flexDirection="row" overflow="hidden" w={"500px"} p={"5px"}>
       <Image

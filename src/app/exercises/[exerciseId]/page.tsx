@@ -1,8 +1,9 @@
 "use client"
 import { fetchExercise } from "@/api/exercises/basic";
-import { Box, Flex, Heading, Skeleton, Stack, Text, Image, List, ListItem, Tabs, Grid, GridItem } from "@chakra-ui/react";
+import { Box, Flex, Heading, Text, Image, List, ListItem, Tabs, Grid, GridItem } from "@chakra-ui/react";
 import Head from "next/head";
 import React, { use, useEffect, useState } from "react";
+import { formatTitle, loadingState } from "../../utils/functions";
 
 
 export default function ExercisePage({ params }: { params: Promise<{ exerciseId: string }> }) {
@@ -12,32 +13,21 @@ export default function ExercisePage({ params }: { params: Promise<{ exerciseId:
   const [exerciseData, setExerciseData] = useState<any>()
   const [value, setValue] = useState<string | null>("first")
 
-  useEffect(() => {
-    const getExercise = async () => {
-      try {
-        const data = await fetchExercise({ id: exerciseId })
-        setExerciseData(data)
-      } catch (e) {
-        setError(true)
-      } finally {
-        setIsLoading(false)
-      }
+  const getExercise = async () => {
+    try {
+      const data = await fetchExercise({ id: exerciseId })
+      setExerciseData(data)
+    } catch (e) {
+      setError(true)
+    } finally {
+      setIsLoading(false)
     }
+  }
 
-  getExercise()
+  useEffect(() => {
+    getExercise()
   }, [exerciseId])
 
-  const loadingState = <>
-
-    <Stack maxW="xl">
-      <Skeleton className="skeleton" height="150px" marginInline={"80px"} width={"470px"} />
-
-    </Stack>
-  </>
-
-  function formatTitle(title: string) {
-    return title.charAt(0).toUpperCase() + title.slice(1)
-  }
 
   return (
     <>
@@ -47,7 +37,9 @@ export default function ExercisePage({ params }: { params: Promise<{ exerciseId:
       <div className="pb-10">
         <div className="items-center min-h-screen">
           <Flex p={10} alignContent={"center"} justifyContent={"center"} >
-            {isLoading && loadingState}
+            <div className="mt-20">
+            {isLoading && loadingState({items: 1, grid: 12, colSpan: 12, height:"600px", width:"1500px"})}
+            </div>
             {error && <>THERE WAS AN ERROR WHILE FETCHING EXERCISES</>}
             {exerciseData && (
               <Box className="w-[70em]  justify-center p-6">

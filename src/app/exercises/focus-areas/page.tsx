@@ -2,8 +2,8 @@
 import Head from "next/head";
 import React, { useEffect, useState } from "react";
 import { fetchBodyParts } from "@/api/exercises/body-parts";
-import { Skeleton, Stack } from "@chakra-ui/react";
 import { BasicCard } from "@/app/custom-components/BasicCard/BasicCard";
+import { loadingState } from "../../utils/functions";
 
 export default function BodyPartsPage() {
 
@@ -26,16 +26,6 @@ export default function BodyPartsPage() {
         getBodyParts()
     }, [])
 
-    const loadingState = <>
-        {Array(12)
-            .fill(null)
-            .map((_, index) => (
-                <Stack key={index} maxW="xs">
-                    <Skeleton className="skeleton" height="150px" marginInline={"80px"} width={"510px"} />
-                </Stack>
-            ))}
-    </>
-
 
     return (
         <>
@@ -45,8 +35,10 @@ export default function BodyPartsPage() {
             <div className="pb-10">
                 <div className="items-center sm:items-start min-h-screen">
                     {error && <>THERE WAS AN ERROR WHILE FETCHING BODY PARTS</>}
+                    <div className="p-10 ml-5">
+                        {isLoading && loadingState({items: 10, grid: 5})}
+                    </div>
                     <div className="grid grid-cols-1 gap-5 mx-8 my-20 md:grid-cols-2 lg:grid-cols-5">
-                        {isLoading && loadingState}
                         {bodyPartsData && bodyPartsData.length > 0 && (
                             <>
                                 {bodyPartsData.map((item: string) => {
