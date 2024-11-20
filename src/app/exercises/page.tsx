@@ -67,7 +67,7 @@ export default function ExercisesPage() {
                             <>
                                 {displayData.map((e) => {
                                     return (
-                                        <div className="items-center w-full px-10">
+                                        <div key={e} className="items-center w-full px-10">
                                             <ExerciseCard exercise={e} />
                                         </div>
 

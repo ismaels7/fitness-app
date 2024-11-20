@@ -51,7 +51,7 @@ export default function BodyPartsPage() {
                             <>
                                 {bodyPartsData.map((item: string) => {
                                     return (
-                                        <BasicCard belongsTo="body-parts" item={item}/>
+                                        <BasicCard key={item} belongsTo="focus-areas" item={item}/>
                                     )
                                 })}
                             </>

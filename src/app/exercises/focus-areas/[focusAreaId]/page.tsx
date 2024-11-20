@@ -1,7 +1,7 @@
 "use client"
 import { fetchExerciseByBodyPart } from "@/api/exercises/body-parts";
 import { AdvancedCard } from "@/app/custom-components/AdvancedCard/AdvancedCard";
-import {  Skeleton, Stack, Grid } from "@chakra-ui/react";
+import {  Skeleton, Stack, Grid, Heading } from "@chakra-ui/react";
 import Head from "next/head";
 import React, { use, useEffect, useState } from "react";
 
@@ -34,6 +34,10 @@ export default function ExerciseByAreaPage({ params }: { params: Promise<{ focus
     </Stack>
   </>
 
+function formatId(title: string) {
+  return decodeURI(title.charAt(0).toUpperCase() + title.slice(1))
+}
+
 
   return (
     <>
@@ -43,11 +47,12 @@ export default function ExerciseByAreaPage({ params }: { params: Promise<{ focus
       <div className="pb-10">
         {/* TOD: show heading 'area: back '(for example) */}
         <div className="items-center min-h-screen">
+        <Heading size={"4xl"}>{formatId(focusAreaId)} Exercises</Heading>
           <Grid p={10} alignContent={"center"} justifyContent={"center"}>
             {isLoading && loadingState}
             {error && <>THERE WAS AN ERROR WHILE FETCHING EXERCISES</>}
             {exerciseData && exerciseData.map((exercise: any) => {
-              return <AdvancedCard exercise={exercise}/>
+              return <AdvancedCard key={exercise.name} exercise={exercise}/>
             })}
           </Grid>
         </div>

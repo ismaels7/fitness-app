@@ -1,5 +1,7 @@
 import { Card, Box, Button } from "@chakra-ui/react"
+import Link from "next/link"
 import router from "next/router"
+import React from "react"
 
 interface BasicCardProps {
     item: string,
@@ -19,7 +21,7 @@ export const BasicCard = ({item, belongsTo}: BasicCardProps) => {
                     <Card.Title mb="2">{formatTitle(item)}</Card.Title>
                 </Card.Body>
                 <Card.Footer>
-                    <Button onClick={() => router.push(`/exercises/${belongsTo}/${item}`)}>Browse exercises</Button>
+                    <Button><Link href={`/exercises/${belongsTo}/${item}`}>Browse exercises</Link></Button>
                 </Card.Footer>
             </Box>
         </Card.Root>

@@ -32,7 +32,7 @@ export default function TargetPage() {
             .fill(null)
             .map((_, index) => (
                 <Stack key={index} maxW="xs">
-                    <Skeleton className="skeleton" height="150px" marginInline={"80px"} width={"510px"} />
+                    <Skeleton className="skeleton" height="70px" marginInline={"80px"} width={"300px"} />
                 </Stack>
             ))}
     </>
@@ -51,7 +51,7 @@ export default function TargetPage() {
                             <>
                                 {targetsData.map((item: string) => {
                                     return (
-                                        <BasicCard belongsTo="body-parts/targets" item={item} />
+                                        <BasicCard key={item} belongsTo="focus-areas/targets" item={item} />
                                     )
                                 })}
                             </>

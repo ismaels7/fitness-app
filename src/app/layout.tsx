@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Provider from "./provider"
-import { CategoryBanner } from "./custom-components/CategoryBanner/CategoryBanner";
+import React from "react";
+import { ClientLayout } from "./custom-components/ClientLayout/ClientLayout";
 
 export const metadata: Metadata = {
   title: "Fitness App",
@@ -13,17 +14,15 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const categoryData = {
-    name: "", url: ""
-  }
   return (
     <html lang="en" suppressHydrationWarning>
       <body className="bg-slate-400">
         <div className="global-container">
           <div className="content-container">
         <Provider>
-        <CategoryBanner category={categoryData} />
-          {children}
+          <ClientLayout>
+            {children}
+          </ClientLayout>
         </Provider>
           </div>
         </div>
