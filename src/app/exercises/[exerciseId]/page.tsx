@@ -1,6 +1,6 @@
 "use client"
 import { fetchExercise } from "@/api/exercises/basic";
-import { Box, Flex, Heading, Text, Image, List, ListItem, Tabs, Grid, GridItem } from "@chakra-ui/react";
+import { Box, Flex, Heading, Text, Image, List, ListItem, Tabs, Grid, GridItem, TabList, Tab, TabPanel } from "@chakra-ui/react";
 import Head from "next/head";
 import React, { use, useEffect, useState } from "react";
 import { formatTitle, loadingState } from "../../utils/functions";
@@ -50,22 +50,22 @@ export default function ExercisePage({ params }: { params: Promise<{ exerciseId:
                   </Box>
                   <Box flex={1} borderRadius={"md"} p={6} h={{ base: "300px", md: "500px" }} overflowY={"auto"}>
 
-                    <Tabs.Root value={value} onValueChange={(e) => setValue(e.value)}>
-                      <Tabs.List>
-                        <Tabs.Trigger value="first">Instructions</Tabs.Trigger>
-                        <Tabs.Trigger value="second">Details</Tabs.Trigger>
-                      </Tabs.List>
+                    <Tabs /* value={value} onValueChange={(e) => setValue(e.value)} */>
+                      <TabList>
+                        <Tab value="first">Instructions</Tab>
+                        <Tab value="second">Details</Tab>
+                      </TabList>
 
-                      <Tabs.Content value="first">
-                        <List.Root as={"ol"}>
+                      <TabPanel >
+                        <List as={"ol"}>
                           {exerciseData.instructions.map((instruction: string, index: number) => {
                             return (
                               <ListItem key={index} p={5}>{instruction}</ListItem>
                             )
                           })}
-                        </List.Root>
-                      </Tabs.Content>
-                      <Tabs.Content value="second">
+                        </List>
+                      </TabPanel>
+                      <TabPanel>
                         <Grid gap={3}>
                           <GridItem>
                             <Heading size={"xl"} alignContent={"center"} justifyContent={"center"}>Area</Heading>
@@ -77,21 +77,21 @@ export default function ExercisePage({ params }: { params: Promise<{ exerciseId:
                           </GridItem>
                           <GridItem>
                             <Heading size={"xl"} alignContent={"center"} justifyContent={"center"}>Secondary muscles</Heading>
-                            <List.Root>
+                            <List>
                               {exerciseData.secondaryMuscles.map((muscle: string, index: number) => {
                                 return (
                                   <ListItem key={index}>{muscle}</ListItem>
                                 )
                               })}
-                            </List.Root>
+                            </List>
                           </GridItem>
                           <GridItem>
                             <Heading size={"xl"} alignContent={"center"} justifyContent={"center"}>Equipment</Heading>
                             <Text>{exerciseData.equipment}</Text>
                           </GridItem>
                         </Grid>
-                      </Tabs.Content>
-                    </Tabs.Root>
+                      </TabPanel>
+                    </Tabs>
                   </Box>
                 </Flex>
               </Box>

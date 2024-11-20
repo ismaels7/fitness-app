@@ -1,5 +1,5 @@
 
-import { Box, Flex, Heading, Text, Image, List, ListItem, Tabs, Grid, GridItem } from "@chakra-ui/react";
+import { Box, Flex, Heading, Text, Image, List, ListItem, Tabs, Grid, GridItem, TabList, Tab, TabPanel } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { formatTitle } from "../../utils/functions";
 interface AdvancedCardProps {
@@ -16,7 +16,7 @@ interface AdvancedCardProps {
 }
 export const AdvancedCard = ({exercise}:AdvancedCardProps ) => {
 
-  const [value, setValue] = useState<string | null>("first")
+
 
     return <Box className="w-[70em]  justify-center p-6">
     <Heading size={"5xl"}>{formatTitle(exercise.name)}</Heading>
@@ -26,22 +26,22 @@ export const AdvancedCard = ({exercise}:AdvancedCardProps ) => {
       </Box>
       <Box flex={1} borderRadius={"md"} p={6} h={{ base: "300px", md: "500px" }} overflowY={"auto"}>
 
-        <Tabs.Root value={value} onValueChange={(e) => setValue(e.value)}>
-          <Tabs.List>
-            <Tabs.Trigger value="first">Instructions</Tabs.Trigger>
-            <Tabs.Trigger value="second">Details</Tabs.Trigger>
-          </Tabs.List>
+        <Tabs /* value={value} onValueChange={(e) => setValue(e.value)} */>
+          <TabList>
+            <Tab >Instructions</Tab>
+            <Tab>Details</Tab>
+          </TabList>
 
-          <Tabs.Content value="first">
-            <List.Root as={"ol"}>
+          <TabPanel >
+            <List as={"ol"}>
               {exercise.instructions.map((instruction: string, index: number) => {
                 return (
                   <ListItem key={index} p={5}>{instruction}</ListItem>
                 )
               })}
-            </List.Root>
-          </Tabs.Content>
-          <Tabs.Content value="second">
+            </List>
+          </TabPanel>
+          <TabPanel >
             <Grid gap={3}>
               <GridItem>
                 <Heading size={"xl"} alignContent={"center"} justifyContent={"center"}>Area</Heading>
@@ -53,21 +53,21 @@ export const AdvancedCard = ({exercise}:AdvancedCardProps ) => {
               </GridItem>
               <GridItem>
                 <Heading size={"xl"} alignContent={"center"} justifyContent={"center"}>Secondary muscles</Heading>
-                <List.Root>
+                <List>
                   {exercise.secondaryMuscles.map((muscle: string, index: number) => {
                     return (
                       <ListItem key={index}>{muscle}</ListItem>
                     )
                   })}
-                </List.Root>
+                </List>
               </GridItem>
               <GridItem>
                 <Heading size={"xl"} alignContent={"center"} justifyContent={"center"}>Equipment</Heading>
                 <Text>{exercise.equipment}</Text>
               </GridItem>
             </Grid>
-          </Tabs.Content>
-        </Tabs.Root>
+          </TabPanel>
+        </Tabs>
       </Box>
     </Flex>
   </Box>

@@ -40,7 +40,7 @@ export default function ExercisesPage() {
         }
     }
     useEffect(() => {
-        getExercises()
+        //getExercises()
     }, [])
 
 
@@ -52,13 +52,13 @@ export default function ExercisesPage() {
             </Head>
             <div className="pb-10">
                 <div className="items-center sm:items-start min-h-screen">
-                    {error && <>THERE WAS AN ERROR WHILE FETCHING EXERCISES</>}
+                    {error && <div data-testid="error-message">THERE WAS AN ERROR WHILE FETCHING EXERCISES</div>}
                     <div className="pt-10 mx-20">
                         {isLoading && loadingState({items: 12, grid: 4, height:"200px"})}
                         </div>
                     <div className="grid grid-cols-1 gap-5 mx-8 my-20 md:grid-cols-2 lg:grid-cols-3">
                         {displayData && displayData.length > 0 && (
-                            <>
+                            <div data-testid="exercises-list">
                                 {displayData.map((e) => {
                                     return (
                                         <div key={e} className="items-center w-full px-10">
@@ -67,7 +67,7 @@ export default function ExercisesPage() {
 
                                     )
                                 })}
-                            </>
+                            </div>
                         )}
                     </div>
                         <div className="mx-20">
@@ -75,7 +75,7 @@ export default function ExercisesPage() {
                         </div>
                     <div className="flex w-full">
                         <div className="flex-1 flex items-center justify-center">
-                            {!isLoading && showLoadMore && (<Button variant="solid" onClick={getExercises}>Load more</Button>)}
+                            {!isLoading && showLoadMore && (<Button data-testid="load-more-button" variant="solid" onClick={getExercises}>Load more</Button>)}
                         </div>
                     </div>
                 </div>

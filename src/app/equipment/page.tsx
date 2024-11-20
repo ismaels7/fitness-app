@@ -34,13 +34,13 @@ export default function EquipmentPage() {
             </Head>
             <div className="pb-10">
                 <div className="items-center sm:items-start min-h-screen">
-                    {error && <>THERE WAS AN ERROR WHILE FETCHING EQUIPMENT</>}
+                    {error && <div data-testid="error-message">THERE WAS AN ERROR WHILE FETCHING EQUIPMENT</div>}
                         <div className="pt-10 mx-20">
                         {isLoading && loadingState({items: 12, grid: 4})}
                         </div>
                     <div className="grid grid-cols-1 gap-5 mx-8 my-20 md:grid-cols-2 lg:grid-cols-3">
                         {equipmentData && equipmentData.length > 0 && (
-                            <>
+                            <div data-testid="equipment-list">
                                 {equipmentData.map((e) => {
                                     return (
                                         <div key={e} className="items-center w-full px-10">
@@ -48,7 +48,7 @@ export default function EquipmentPage() {
                                         </div>
                                     )
                                 })}
-                            </>
+                            </div>
                         )}
                     </div>
                 </div>

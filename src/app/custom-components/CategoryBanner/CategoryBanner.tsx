@@ -21,9 +21,9 @@ export const CategoryBanner = ({ pathname }: CategoryBannerProps) => {
     const [equipmentsData, setEquipmentsData] = useState<any[]>([])
 
     useEffect(() => {
-        getBodyParts()
-        getTargets()
-        getEquipments()
+        // getBodyParts()
+        // getTargets()
+        //getEquipments()
     }, [])
 
     const getBodyParts = async () => {
@@ -72,14 +72,14 @@ export const CategoryBanner = ({ pathname }: CategoryBannerProps) => {
         children: React.ReactNode;
         element: any
     }) {
-        const { open, onOpen, onClose } = useDisclosure();
+        const { isOpen, onOpen, onClose } = useDisclosure();
 
         return (
             <Box position="relative" onMouseEnter={onOpen} onMouseLeave={onClose}>
                 <Link key={element.url} href={element.url}><Heading color={pathname.startsWith(element.url) ? "cyan.500" : "white"}
                     marginTop={"5px"} fontSize={{ base: "lg", md: "xl" }} mb={4}>{element.name}</Heading></Link>
 
-                {open && (
+                {isOpen && (
                     <VStack
                         position="absolute"
                         top="100%"
