@@ -1,32 +1,42 @@
 "use client";
 import Head from "next/head";
 import React, { useEffect, useState } from "react";
-import { CategoryBanner } from "../custom-components/CategoryBanner/CategoryBanner";
-import { fetchEquipment } from "@/api/exercises/equipment";
+import { fetchEquipments } from "@/api/exercises/equipment";
+import { Skeleton, Stack } from "@chakra-ui/react";
+import { EquipmentCard } from "../custom-components/EquipmentCard/EquipmentCard"
 
 export default function EquipmentPage() {
 
     const [equipmentData, setEquipmentData] = useState<any[]>()
     const [error, setError] = useState(false)
     const [isLoading, setIsLoading] = useState(true)
-    const categoryData = {
-        name: "Equipment",
-        url: "/equipment"
+
+    const getEquipment = async () => {
+        try {
+            const data = await fetchEquipments()
+            setEquipmentData(data)
+        } catch (e) {
+            setError(true)
+        } finally {
+            setIsLoading(false)
+        }
     }
 
     useEffect(() => {
-        const getEquipment = async () => {
-            try {
-                const data = await fetchEquipment()
-                setEquipmentData(data)
-            } catch (e) {
-                setError(true)
-            } finally {
-                setIsLoading(false)
-            }
-        }
         getEquipment()
     }, [])
+
+    const loadingState = <>
+        {Array(12)
+            .fill(null)
+            .map((_, index) => (
+                <Stack key={index} maxW="xs">
+                    <Skeleton className="skeleton" height="150px" marginInline={"80px"} width={"510px"} />
+
+                </Stack>
+            ))}
+    </>
+
     return (
         <>
             <Head>
@@ -34,19 +44,21 @@ export default function EquipmentPage() {
             </Head>
             <div className="pb-10">
                 <div className="items-center sm:items-start min-h-screen">
-                    <CategoryBanner category={categoryData} />
-                    This is the equipment page
-                    {isLoading && <>LOADING EXERCISES</>}
                     {error && <>THERE WAS AN ERROR WHILE FETCHING EQUIPMENT</>}
-                    {equipmentData && equipmentData.length > 0 && (
-                        <>
-                            {equipmentData.map((item) => {
-                                return (
-                                    <p>{item}</p>
-                                )
-                            })}
-                        </>
-                    )}
+                    <div className="grid grid-cols-1 gap-5 mx-8 my-20 md:grid-cols-2 lg:grid-cols-3">
+                        {isLoading && loadingState}
+                        {equipmentData && equipmentData.length > 0 && (
+                            <>
+                                {equipmentData.map((e) => {
+                                    return (
+                                        <div className="items-center w-full px-10">
+                                            <EquipmentCard exercise={e} />
+                                        </div>
+                                    )
+                                })}
+                            </>
+                        )}
+                    </div>
                 </div>
             </div>
         </>

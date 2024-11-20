@@ -1,9 +1,9 @@
 import axios from "axios"
 
 export const exerciseAPI = axios.create({
-    baseURL: "https://exercisedb.p.rapidapi.com",
+    baseURL: "https://exercisedb.p.rapidapi.com/",
     headers: {
-        "x-rapidapi-key": "ba55c395e9msh828bbfcbfb61b82p1e13acjsn27d906234eae",
-        "x-rapidapi-host": "exercisedb.p.rapidapi.com"
-    }
+        'x-rapidapi-key': '1ce896cf51mshe2be712cb952b09p1a58bfjsne03c89933f33',
+        'x-rapidapi-host': 'exercisedb.p.rapidapi.com'
+      }
 })
