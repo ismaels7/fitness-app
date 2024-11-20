@@ -1,6 +1,7 @@
 
 import { Box, Flex, Heading, Text, Image, List, ListItem, Tabs, Grid, GridItem } from "@chakra-ui/react";
 import React, { useState } from "react";
+import { formatTitle } from "../../utils/functions";
 interface AdvancedCardProps {
     exercise: {
         name: string,
@@ -16,10 +17,7 @@ interface AdvancedCardProps {
 export const AdvancedCard = ({exercise}:AdvancedCardProps ) => {
 
   const [value, setValue] = useState<string | null>("first")
-    function formatTitle(title: string) {
-        return title.charAt(0).toUpperCase() + title.slice(1)
-      }
-    
+
     return <Box className="w-[70em]  justify-center p-6">
     <Heading size={"5xl"}>{formatTitle(exercise.name)}</Heading>
     <Flex direction={{ base: 'column', md: 'row' }} align={"start"} justify={"space-between"} p={8}>

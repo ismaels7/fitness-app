@@ -1,9 +1,10 @@
 "use client"
 import { fetchExercisesByTarget } from "@/api/exercises/target";
 import { AdvancedCard } from "@/app/custom-components/AdvancedCard/AdvancedCard";
-import { Skeleton, Stack, Grid, Heading } from "@chakra-ui/react";
+import { Grid, Heading } from "@chakra-ui/react";
 import Head from "next/head";
 import React, { use, useEffect, useState } from "react";
+import { formatTitle, loadingState } from "../../../../utils/functions";
 
 
 export default function Target({ params }: { params: Promise<{ targetId: string }> }) {
@@ -12,30 +13,21 @@ export default function Target({ params }: { params: Promise<{ targetId: string 
     const [isLoading, setIsLoading] = useState(true)
     const [targetExercises, setTargetExercises] = useState<any>()
 
-    useEffect(() => {
-        const getExercisesBytarget = async () => {
-            try {
-                const data = await fetchExercisesByTarget({ id: targetId })
-                setTargetExercises(data)
-            } catch (e) {
-                setError(true)
-            } finally {
-                setIsLoading(false)
-            }
+    const getExercisesBytarget = async () => {
+        try {
+            const data = await fetchExercisesByTarget({ id: targetId })
+            setTargetExercises(data)
+        } catch (e) {
+            setError(true)
+        } finally {
+            setIsLoading(false)
         }
+    }
 
+    useEffect(() => {
         getExercisesBytarget()
     }, [targetId])
 
-    const loadingState = <>
-        <Stack>
-            <Skeleton className="skeleton" height="400px" marginInline={"80px"} width={"700px"} />
-        </Stack>
-    </>
-
-    function formatId(title: string) {
-        return decodeURI(title.charAt(0).toUpperCase() + title.slice(1))
-    }
 
     return (
         <>
@@ -44,9 +36,9 @@ export default function Target({ params }: { params: Promise<{ targetId: string 
             </Head>
             <div className="pb-10">
                 <div className="items-center min-h-screen">
-                    <Heading size={"4xl"}>{formatId(targetId)} Exercises</Heading>
-                    <Grid p={10} alignContent={"center"} justifyContent={"center"} /* backgroundColor={"red"} */>
-                        {isLoading && loadingState}
+                    <Heading size={"4xl"}>{formatTitle(targetId)} Exercises</Heading>
+                    <Grid p={10} alignContent={"center"} justifyContent={"center"}>
+                        {isLoading && loadingState({items:4, grid:12, colSpan:12, width:"700px", height:"400px"})}
                         {error && <>THERE WAS AN ERROR WHILE FETCHING EXERCISES BY TARGET</>}
                         {targetExercises && targetExercises.map((exercise: any) => {
                             return <AdvancedCard key={exercise.name} exercise={exercise} />

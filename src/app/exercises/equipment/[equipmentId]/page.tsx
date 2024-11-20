@@ -1,10 +1,11 @@
 "use client"
 
 import { AdvancedCard } from "@/app/custom-components/AdvancedCard/AdvancedCard";
-import { Skeleton, Stack, Grid, Heading, Box } from "@chakra-ui/react";
+import { Grid, Heading } from "@chakra-ui/react";
 import Head from "next/head";
 import React, { use, useEffect, useState } from "react";
 import { fetchExerciseByEquipment } from "../../../../api/exercises/equipment";
+import { formatTitle, loadingState } from "../../../utils/functions";
 
 
 export default function ExerciseByAreaPage({ params }: { params: Promise<{ equipmentId: string }> }) {
@@ -28,15 +29,6 @@ export default function ExerciseByAreaPage({ params }: { params: Promise<{ equip
         getExercisesByEquipment()
     }, [equipmentId])
 
-    const loadingState = <>
-    <Stack>
-        <Skeleton className="skeleton" height="400px" marginInline={"80px"} width={"700px"} />
-    </Stack>
-    </>
-
-    function formatId(title: string) {
-        return decodeURI(title.charAt(0).toUpperCase() + title.slice(1))
-    }
 
     return (
         <>
@@ -45,9 +37,9 @@ export default function ExerciseByAreaPage({ params }: { params: Promise<{ equip
             </Head>
             <div className="pb-10">
                 <div className="items-center min-h-screen">
-                <Heading size={"4xl"}>{formatId(equipmentId)} Exercises</Heading>
+                <Heading size={"4xl"}>{formatTitle(equipmentId)} Exercises</Heading>
                     <Grid p={10} alignContent={"center"} justifyContent={"center"}>
-                    {isLoading && loadingState}
+                    {isLoading && loadingState({items: 4, grid: 12, colSpan: 12, width:"700px", height:"400px"})}
                     {error && <>THERE WAS AN ERROR WHILE FETCHING EXERCISES BY TARGET</>}
                     {exerciseData && exerciseData.map((exercise: any) => {
                         return <AdvancedCard key={exercise.url} exercise={exercise} />
