@@ -1,31 +1,42 @@
 "use client";
 import Head from "next/head";
 import React, { useEffect, useState } from "react";
-import { CategoryBanner } from "../../custom-components/CategoryBanner/CategoryBanner";
 import { fetchBodyParts } from "@/api/exercises/body-parts";
+import { Skeleton, Stack } from "@chakra-ui/react";
+import { BasicCard } from "@/app/custom-components/BasicCard/BasicCard";
 
 export default function BodyPartsPage() {
 
     const [bodyPartsData, setBodyPartsData] = useState<any[]>()
     const [error, setError] = useState(false)
     const [isLoading, setIsLoading] = useState(true)
-    const categoryData = {
-        name: "Focus Areas",
-        url: "/focus-areas"
-    }
-    useEffect(() => {
-        const getBodyParts = async () => {
-            try {
-                const data = await fetchBodyParts()
-                setBodyPartsData(data)
-            } catch (e) {
-                setError(true)
-            } finally {
-                setIsLoading(false)
-            }
+
+    const getBodyParts = async () => {
+        try {
+            const data = await fetchBodyParts()
+            setBodyPartsData(data)
+        } catch (e) {
+            setError(true)
+        } finally {
+            setIsLoading(false)
         }
+    }
+
+    useEffect(() => {
         getBodyParts()
     }, [])
+
+    const loadingState = <>
+        {Array(12)
+            .fill(null)
+            .map((_, index) => (
+                <Stack key={index} maxW="xs">
+                    <Skeleton className="skeleton" height="150px" marginInline={"80px"} width={"510px"} />
+                </Stack>
+            ))}
+    </>
+
+
     return (
         <>
             <Head>
@@ -33,19 +44,19 @@ export default function BodyPartsPage() {
             </Head>
             <div className="pb-10">
                 <div className="items-center sm:items-start min-h-screen">
-                    <CategoryBanner  category={categoryData}/>
-                    This is the body parts page
-                    {isLoading && <>LOADING EXERCISES</>}
                     {error && <>THERE WAS AN ERROR WHILE FETCHING BODY PARTS</>}
-                    {bodyPartsData && bodyPartsData.length > 0 && (
-                        <>
-                            {bodyPartsData.map((item) => {
-                                return (
-                                    <p>{item}</p>
-                                )
-                            })}
-                        </>
-                    )}
+                    <div className="grid grid-cols-1 gap-5 mx-8 my-20 md:grid-cols-2 lg:grid-cols-5">
+                        {isLoading && loadingState}
+                        {bodyPartsData && bodyPartsData.length > 0 && (
+                            <>
+                                {bodyPartsData.map((item: string) => {
+                                    return (
+                                        <BasicCard belongsTo="body-parts" item={item}/>
+                                    )
+                                })}
+                            </>
+                        )}
+                    </div>
                 </div>
             </div>
         </>

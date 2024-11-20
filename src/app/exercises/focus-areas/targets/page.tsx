@@ -1,32 +1,42 @@
 "use client";
 import Head from "next/head";
 import React, { useEffect, useState } from "react";
-import { CategoryBanner } from "../../../custom-components/CategoryBanner/CategoryBanner";
-import { fetchTarget } from "@/api/exercises/target";
+import { fetchTargets } from "@/api/exercises/target";
+import { Skeleton, Stack } from "@chakra-ui/react";
+import { BasicCard } from "@/app/custom-components/BasicCard/BasicCard";
 
 export default function TargetPage() {
 
     const [targetsData, setTargetsData] = useState<any[]>()
     const [error, setError] = useState(false)
     const [isLoading, setIsLoading] = useState(true)
-    const categoryData = {
-        name: "Targets",
-        url: "/targets"
+
+    const getTargets = async () => {
+        try {
+            const data = await fetchTargets()
+            setTargetsData(data)
+        } catch (e) {
+            setError(true)
+        } finally {
+            setIsLoading(false)
+        }
     }
 
+
     useEffect(() => {
-        const getTargets = async () => {
-            try {
-                const data = await fetchTarget()
-                setTargetsData(data)
-            } catch (e) {
-                setError(true)
-            } finally {
-                setIsLoading(false)
-            }
-        }
         getTargets()
     }, [])
+
+    const loadingState = <>
+        {Array(12)
+            .fill(null)
+            .map((_, index) => (
+                <Stack key={index} maxW="xs">
+                    <Skeleton className="skeleton" height="150px" marginInline={"80px"} width={"510px"} />
+                </Stack>
+            ))}
+    </>
+
     return (
         <>
             <Head>
@@ -34,19 +44,19 @@ export default function TargetPage() {
             </Head>
             <div className="pb-10">
                 <div className="items-center sm:items-start min-h-screen">
-                    <CategoryBanner category={categoryData}/>
-                    This is the target page
-                    {isLoading && <>LOADING EXERCISES</>}
-                    {error && <>THERE WAS AN ERROR WHILE FETCHING TARGETS</>}
-                    {targetsData && targetsData.length > 0 && (
-                        <>
-                            {targetsData.map((item) => {
-                                return (
-                                    <p>{item}</p>
-                                )
-                            })}
-                        </>
-                    )}
+                    {error && <>THERE WAS AN ERROR WHILE FETCHING BODY PARTS</>}
+                    <div className="grid grid-cols-1 gap-5 mx-8 my-20 md:grid-cols-2 lg:grid-cols-4">
+                        {isLoading && loadingState}
+                        {targetsData && targetsData.length > 0 && (
+                            <>
+                                {targetsData.map((item: string) => {
+                                    return (
+                                        <BasicCard belongsTo="body-parts/targets" item={item} />
+                                    )
+                                })}
+                            </>
+                        )}
+                    </div>
                 </div>
             </div>
         </>

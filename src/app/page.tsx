@@ -17,13 +17,13 @@ const categories = [
   {
     id: 2,
     title: "Targets",
-    summary: "Decide which body part you want to train an start training it!",
+    summary: "Pick a specific target and go for it!",
     url:"/exercises/focus-areas/targets"
   },
   {
     id: 3,
     title: "Equipment",
-    summary: "Decide which body part you want to train an start training it!",
+    summary: "Explore the list of equipment ans start your journey!",
     url:"/equipment"
   }
 ]
@@ -34,7 +34,7 @@ const items = [{ id: "1", name: "Abs" }, { id: "2", name: "Curl biceps" }, { id:
 export default function Home() {
 
   return (
-    <div className="pb-10" /* className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]" */>
+    <div className="pb-10 min-h-screen">
       <main className="items-center sm:items-start">
         <Banner />
         <div className="grid grid-cols-1 gap-5 mx-8 my-20 md:grid-cols-2 lg:grid-cols-3">
@@ -44,7 +44,6 @@ export default function Home() {
             )
           })}
         </div>
-      {/*   <div className="grid grid-cols-1 md:grid-cols-2 gap-5 m-8"> */}
 
           <Grid templateColumns="1fr 2px 1fr" gap="1" m={8} marginBottom={20}>
             <TrendingList list={items}  />
@@ -55,7 +54,6 @@ export default function Home() {
           </Grid>
 
 
-{/*         </div> */}
       </main>
       <footer className="flex gap-6 flex-wrap items-center justify-center mt-10">
         <a
