@@ -1,7 +1,7 @@
 "use client"
 import { fetchExercisesByTarget } from "@/api/exercises/target";
 import { AdvancedCard } from "@/app/custom-components/AdvancedCard/AdvancedCard";
-import { Skeleton, Stack, Grid } from "@chakra-ui/react";
+import { Skeleton, Stack, Grid, Heading } from "@chakra-ui/react";
 import Head from "next/head";
 import React, { use, useEffect, useState } from "react";
 
@@ -28,12 +28,14 @@ export default function Target({ params }: { params: Promise<{ targetId: string 
     }, [targetId])
 
     const loadingState = <>
-
-        <Stack maxW="xl">
-            <Skeleton className="skeleton" height="150px" marginInline={"80px"} width={"470px"} />
-
+        <Stack>
+            <Skeleton className="skeleton" height="400px" marginInline={"80px"} width={"700px"} />
         </Stack>
     </>
+
+    function formatId(title: string) {
+        return decodeURI(title.charAt(0).toUpperCase() + title.slice(1))
+    }
 
     return (
         <>
@@ -42,11 +44,12 @@ export default function Target({ params }: { params: Promise<{ targetId: string 
             </Head>
             <div className="pb-10">
                 <div className="items-center min-h-screen">
+                    <Heading size={"4xl"}>{formatId(targetId)} Exercises</Heading>
                     <Grid p={10} alignContent={"center"} justifyContent={"center"} /* backgroundColor={"red"} */>
                         {isLoading && loadingState}
                         {error && <>THERE WAS AN ERROR WHILE FETCHING EXERCISES BY TARGET</>}
                         {targetExercises && targetExercises.map((exercise: any) => {
-                            return <AdvancedCard exercise={exercise} />
+                            return <AdvancedCard key={exercise.name} exercise={exercise} />
                         })}
                     </Grid>
                 </div>

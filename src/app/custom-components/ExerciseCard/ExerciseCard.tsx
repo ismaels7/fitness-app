@@ -1,5 +1,6 @@
 import { Card, Button, Image, Box, HStack, Badge } from "@chakra-ui/react"
 import { useRouter } from "next/navigation"
+import React from "react"
 import { FaLocationCrosshairs, FaRegHandBackFist, FaSuitcase } from "react-icons/fa6"
 
 interface ExerciseCardProps {

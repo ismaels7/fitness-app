@@ -31,7 +31,7 @@ export default function EquipmentPage() {
             .fill(null)
             .map((_, index) => (
                 <Stack key={index} maxW="xs">
-                    <Skeleton className="skeleton" height="150px" marginInline={"80px"} width={"510px"} />
+                    <Skeleton className="skeleton" height="70px" marginInline={"80px"} width={"300px"} />
 
                 </Stack>
             ))}
@@ -51,7 +51,7 @@ export default function EquipmentPage() {
                             <>
                                 {equipmentData.map((e) => {
                                     return (
-                                        <div className="items-center w-full px-10">
+                                        <div key={e} className="items-center w-full px-10">
                                             <EquipmentCard exercise={e} />
                                         </div>
                                     )
