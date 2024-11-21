@@ -8,7 +8,7 @@ import { fetchExerciseByEquipment } from "../../../../api/exercises/equipment";
 import { formatTitle, loadingState } from "../../../utils/functions";
 
 
-export default function ExerciseByAreaPage({ params }: { params: Promise<{ equipmentId: string }> }) {
+export default function ExerciseByEquipmentPage({ params }: { params: Promise<{ equipmentId: string }> }) {
     const { equipmentId } = use(params);
     const [error, setError] = useState(false)
     const [isLoading, setIsLoading] = useState(true)
@@ -40,7 +40,7 @@ export default function ExerciseByAreaPage({ params }: { params: Promise<{ equip
                 <Heading size={"4xl"}>{formatTitle(equipmentId)} Exercises</Heading>
                     <Grid p={10} alignContent={"center"} justifyContent={"center"}>
                     {isLoading && loadingState({items: 4, grid: 12, colSpan: 12, width:"700px", height:"400px"})}
-                    {error && <>THERE WAS AN ERROR WHILE FETCHING EXERCISES BY TARGET</>}
+                    {error && <div data-testid="error-message">THERE WAS AN ERROR WHILE FETCHING EXERCISES BY TARGET</div>}
                     {exerciseData && exerciseData.map((exercise: any) => {
                         return <AdvancedCard key={exercise.url} exercise={exercise} />
                     })}

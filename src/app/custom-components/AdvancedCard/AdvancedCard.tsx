@@ -15,10 +15,8 @@ interface AdvancedCardProps {
     }
 }
 export const AdvancedCard = ({exercise}:AdvancedCardProps ) => {
-
-
-
-    return <Box className="w-[70em]  justify-center p-6">
+  
+    return <Box data-testid="advanced-card" className="w-[70em]  justify-center p-6">
     <Heading size={"5xl"}>{formatTitle(exercise.name)}</Heading>
     <Flex direction={{ base: 'column', md: 'row' }} align={"start"} justify={"space-between"} p={8}>
       <Box flex={1}>

@@ -5,7 +5,7 @@ import { fetchBodyParts } from "@/api/exercises/body-parts";
 import { BasicCard } from "@/app/custom-components/BasicCard/BasicCard";
 import { loadingState } from "../../utils/functions";
 
-export default function BodyPartsPage() {
+export default function FocusAreasPage() {
 
     const [bodyPartsData, setBodyPartsData] = useState<any[]>()
     const [error, setError] = useState(false)
