@@ -14,7 +14,7 @@ export interface LoadingStateProps {
 }
 export const loadingState = ({items, grid, colSpan, width, height}: LoadingStateProps) => {
     return (
-        <div className={`grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-${grid}`}>
+        <div data-testid="loading-state" className={`grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-${grid}`}>
         {Array(items)
             .fill(null)
             .map((_, index) => (

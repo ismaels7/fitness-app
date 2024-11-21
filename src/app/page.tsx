@@ -34,9 +34,9 @@ const items = [{ id: "1", name: "Abs" }, { id: "2", name: "Curl biceps" }, { id:
 export default function Home() {
 
   return (
-    <div className="pb-10 min-h-screen">
+    <div data-testid="main" className="pb-10 min-h-screen">
       <main className="items-center sm:items-start">
-        <Banner />
+        <Banner data-testid="banner-container" />
         <div className="grid grid-cols-1 gap-5 mx-8 my-20 md:grid-cols-2 lg:grid-cols-3">
           {categories.map((category) => {
             return (

@@ -15,7 +15,7 @@ export const fetchBodyParts = async () => {
     }
 }
 
-export const fetchExerciseByBodyPart = async({id}:FetchExerciseByAreaParams): Promise<any> => {
+export const fetchExercisesByBodyPart = async({id}:FetchExerciseByAreaParams): Promise<any> => {
     try {
         const response: AxiosResponse<any> = await exerciseAPI.get(`/exercises/bodyPart/${id}`);
         return response.data

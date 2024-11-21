@@ -4,8 +4,8 @@ import Head from "next/head";
 import React from "react";
 import { useEffect, useState } from "react";
 import { ExerciseCard } from "../custom-components/ExerciseCard/ExerciseCard";
-import { Button } from "@chakra-ui/react";
-import { loadingState } from "../utils/functions";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, Button, Heading } from "@chakra-ui/react";
+import { formatTitle, loadingState } from "../utils/functions";
 
 export default function ExercisesPage() {
     const [displayData, setDisplayData] = useState<any[]>([])
@@ -43,39 +43,55 @@ export default function ExercisesPage() {
         getExercises()
     }, [])
 
-
-//TODO: Add breadcrumbs
     return (
         <>
             <Head>
                 <title>Exercises</title>
             </Head>
             <div className="pb-10">
-                <div className="items-center sm:items-start min-h-screen">
-                    {error && <>THERE WAS AN ERROR WHILE FETCHING EXERCISES</>}
+                <div className="items-center sm:items-start min-h-screen p-5">
+                    <Breadcrumb data-testid="breadcrumb">
+                        <BreadcrumbItem>
+                            <BreadcrumbLink href='/'>
+                                Home
+                            </BreadcrumbLink>
+                        </BreadcrumbItem>
+                        <BreadcrumbItem isCurrentPage>
+                            <BreadcrumbLink>Exercises</BreadcrumbLink>
+                        </BreadcrumbItem>
+                    </Breadcrumb>
+                    {error && (
+                        <div data-testid="error-state">
+                            <Heading>There was an error while fetching data, please check the logs</Heading>
+                        </div>)}
                     <div className="pt-10 mx-20">
-                        {isLoading && loadingState({items: 12, grid: 4, height:"200px"})}
-                        </div>
-                    <div className="grid grid-cols-1 gap-5 mx-8 my-20 md:grid-cols-2 lg:grid-cols-3">
-                        {displayData && displayData.length > 0 && (
-                            <>
-                                {displayData.map((e) => {
-                                    return (
-                                        <div key={e} className="items-center w-full px-10">
-                                            <ExerciseCard exercise={e} />
-                                        </div>
-
-                                    )
-                                })}
-                            </>
-                        )}
+                        {isLoading && loadingState({ items: 12, grid: 3, height: "200px" })}
                     </div>
-                        <div className="mx-20">
-                        {isRoundLoading && loadingState({items: 12, grid: 4, height:"200px"})}
-                        </div>
+                    {displayData && displayData.length > 0 && (
+                        <>
+                            <div className="flex items-center justify-center">
+                                <Heading size={"2xl"}>Exercises</Heading>
+                            </div>
+                            <div data-testid="exercises-list" className="grid grid-cols-1 gap-5 mx-8 my-20 md:grid-cols-2 lg:grid-cols-3">
+                                <>
+                                    {displayData.map((e, i) => {
+                                        return (
+                                            <div key={e + i} className="items-center w-full px-10">
+                                                <ExerciseCard exercise={e} />
+                                            </div>
+
+                                        )
+                                    })}
+                                </>
+                            </div>
+                        </>
+                    )}
+                    <div className="mx-20">
+                        {isRoundLoading && loadingState({ items: 12, grid: 3, height: "200px" })}
+                    </div>
                     <div className="flex w-full">
                         <div className="flex-1 flex items-center justify-center">
-                            {!isLoading && showLoadMore && (<Button variant="solid" onClick={getExercises}>Load more</Button>)}
+                            {!isLoading && showLoadMore && (<Button data-testid="load-more-button" variant="solid" onClick={getExercises}>Load more</Button>)}
                         </div>
                     </div>
                 </div>

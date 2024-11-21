@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Provider from "./provider"
 import React from "react";
 import { ClientLayout } from "./custom-components/ClientLayout/ClientLayout";
+import { ChakraProvider } from "@chakra-ui/react";
 
 export const metadata: Metadata = {
   title: "Fitness App",
@@ -19,14 +19,15 @@ export default function RootLayout({
       <body className="bg-slate-400">
         <div className="global-container">
           <div className="content-container">
-        <Provider>
+        <ChakraProvider>
           <ClientLayout>
             {children}
           </ClientLayout>
-        </Provider>
+        </ChakraProvider>
           </div>
         </div>
       </body>
     </html>
   );
 }
+

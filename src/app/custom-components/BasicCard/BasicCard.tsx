@@ -1,4 +1,4 @@
-import { Card, Box, Button } from "@chakra-ui/react"
+import { Card, Box, Button, CardBody, CardFooter, Heading } from "@chakra-ui/react"
 import Link from "next/link"
 import React from "react"
 import { formatTitle } from "../../utils/functions"
@@ -12,15 +12,15 @@ export const BasicCard = ({item, belongsTo}: BasicCardProps) => {
 
 
     return (
-        <Card.Root key={item} className="customTile" flexDirection="row" overflow="hidden" w={"300px"} p={"5px"}>
+        <Card key={item} className="customTile" flexDirection="row" overflow="hidden" w={"300px"} p={"5px"}>
             <Box>
-                <Card.Body>
-                    <Card.Title mb="2">{formatTitle(item)}</Card.Title>
-                </Card.Body>
-                <Card.Footer>
+                <CardBody>
+                    <Heading mb="2">{formatTitle(item)}</Heading>
+                </CardBody>
+                <CardFooter>
                     <Button><Link href={`/exercises/${belongsTo}/${item}`}>Browse exercises</Link></Button>
-                </Card.Footer>
+                </CardFooter>
             </Box>
-        </Card.Root>
+        </Card>
     )
 }
