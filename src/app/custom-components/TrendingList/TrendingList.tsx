@@ -1,4 +1,6 @@
-import { Icon, Box, GridItem, Heading } from "@chakra-ui/react"
+import { formatTitle } from "@/app/utils/functions"
+import { Icon, Box, GridItem, Heading, Text } from "@chakra-ui/react"
+import Link from "next/link"
 import React from "react"
 import { FaAngleRight } from "react-icons/fa6"
 
@@ -8,25 +10,28 @@ type ItemListType = {
 }
 
 type TrendingListProps = {
-    list: ItemListType[]
+    list: ItemListType[] | string[],
+    title: string
 }
-export const TrendingList = ({ list }: TrendingListProps) => {
+export const TrendingList = ({ list, title }: TrendingListProps) => {
     return (
         <GridItem>
-            <Heading display={"flex"} justifyContent={"center"} alignItems={"center"} >Trending exercises</Heading>
+            <Heading display={"flex"} justifyContent={"center"} alignItems={"center"} >{title}</Heading>
             <Box display={"flex"} justifyContent={"center"} alignItems={"center"} height={"100%"}>
                 <div>
-            {list.map((item) => {
-                return (
-                    <div key={item.id} className="flex items-center">
-                        <Icon fontSize={"20px"}><FaAngleRight /></Icon>
-                        <h3>{item.name}</h3>
-                    </div>
-                )
-            })}
-            </div>
+                    {list.map((item) => {
+                        return (
+                            <Link key={typeof item === 'string' ? item : item.id} href={typeof item === 'string' ? `/exercises/equipment/${item}` : `exercises/${item.id}`}>
+                                <div className="flex items-center">
+                                    <Icon fontSize={"20px"}><FaAngleRight /></Icon>
+                                    <Text>{formatTitle(typeof item === 'string' ? item : item.name)}</Text>
+                                </div>
+                            </Link>
+                        )
+                    })}
+                </div>
             </Box>
-           
+
         </GridItem>
     )
 }

@@ -1,37 +1,78 @@
 "use client";
 
-import { Box, Grid, GridItem } from "@chakra-ui/react";
+import { Box, Grid, GridItem, Heading } from "@chakra-ui/react";
 import Image from "next/image";
 import { Banner } from "./custom-components/Banner/Banner";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { CategoryTile } from "./custom-components/CategoryTile/CategoryTile";
 import { TrendingList } from "./custom-components/TrendingList/TrendingList";
+import { fetchExercises } from "@/api/exercises/basic";
+import { fetchEquipments } from "@/api/exercises/equipment";
+import { loadingState } from "./utils/functions";
 
 const categories = [
   {
     id: 1,
     title: "Focus Areas",
     summary: "Decide which area you want to focus on!",
-    url:"/exercises/focus-areas"
+    url: "/exercises/focus-areas"
   },
   {
     id: 2,
     title: "Targets",
     summary: "Pick a specific target and go for it!",
-    url:"/exercises/focus-areas/targets"
+    url: "/exercises/focus-areas/targets"
   },
   {
     id: 3,
     title: "Equipment",
     summary: "Explore the list of equipment ans start your journey!",
-    url:"/equipment"
+    url: "/equipment"
   }
 ]
 
 const items = [{ id: "1", name: "Abs" }, { id: "2", name: "Curl biceps" }, { id: "3", name: "Bench press" },]
+const equip = [{ id: "1", name: "Abs" }, { id: "2", name: "Curl biceps" }, { id: "3", name: "Bench press" },]
 
 
 export default function Home() {
+
+  const [errorExercises, setErrorExercises] = useState(false)
+  const [errorEquipment, setErrorEquipment] = useState(false)
+  const [isLoadingExercises, setIsLoadingExercises] = useState(true)
+  const [isLoadingEquipment, setIsLoadingEquipment] = useState(true)
+  const [trendingExericses, setTrendingExercises] = useState<any>()
+  const [trendingEquipment, setTrendingEquipment] = useState<any>()
+
+  const getTrendingExercises = async () => {
+    try {
+      setIsLoadingExercises(true)
+      const data = await fetchExercises({ perPage: 3, offset: (Math.floor(Math.random() * 20) * 1) })
+      setTrendingExercises(data)
+    } catch (e) {
+      setErrorExercises(true)
+    } finally {
+      setIsLoadingExercises(false)
+    }
+  }
+
+  const getTrendingEquipment = async () => {
+    try {
+      setIsLoadingEquipment(true)
+      const data = await fetchEquipments()
+      const randomItems = data.sort(() => 0 - Math.random()).slice(0, 3)
+      setTrendingEquipment(randomItems)
+    } catch (e) {
+      setErrorEquipment(true)
+    } finally {
+      setIsLoadingEquipment(false)
+    }
+  }
+
+  useEffect(() => {
+    getTrendingExercises()
+    getTrendingEquipment()
+  }, [])
 
   return (
     <div data-testid="main" className="pb-10 min-h-screen">
@@ -44,14 +85,31 @@ export default function Home() {
             )
           })}
         </div>
-
+        <>
           <Grid templateColumns="1fr 2px 1fr" gap="1" m={8} marginBottom={20}>
-            <TrendingList list={items}  />
+            {isLoadingExercises && <div className="flex pl-7 items-center justfy-center">
+              {loadingState({ items: 3, grid: 3, colSpan: 3, height: "30px", width: "800px" })}
+            </div>}
+              {errorExercises && (
+                <div data-testid="error-exercises-state">
+                  <Heading>There was an error while fetching data, please check the logs</Heading>
+                </div>
+              )}
+            {!isLoadingExercises && !errorExercises &&  <TrendingList title="Trending Exercises" list={trendingExericses || []} />}
             <GridItem>
-              <Box display={"flex"} justifyContent={"center"} alignItems={"center"}   width={"1px"} bg={"gray.400"} height={"100%"} />
-              </GridItem>
-            <TrendingList list={items} />
+              <Box display={"flex"} justifyContent={"center"} alignItems={"center"} width={"1px"} bg={"gray.400"} height={"100%"} />
+            </GridItem>
+            {isLoadingEquipment && <div className="flex pl-7 items-center justfy-center">
+              {loadingState({ items: 3, grid: 3, colSpan: 3, height: "30px", width: "800px" })}
+            </div>}
+            {errorEquipment && (
+              <div data-testid="error-equipment-state">
+                <Heading>There was an error while fetching data, please check the logs</Heading>
+              </div>
+            )}
+            {!isLoadingEquipment && !errorEquipment && <TrendingList title="Trending Equipment" list={trendingEquipment || []} />}
           </Grid>
+        </>
 
 
       </main>

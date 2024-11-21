@@ -1,7 +1,7 @@
 "use client"
 import { fetchBodyParts } from "@/api/exercises/body-parts"
 import { fetchTargets } from "@/api/exercises/target"
-import { Box, GridItem, Heading, VStack, Grid } from "@chakra-ui/react"
+import { Box, GridItem, Heading, VStack, Grid, Text } from "@chakra-ui/react"
 import Link from "next/link"
 import { useEffect, useState } from "react"
 
@@ -77,7 +77,7 @@ export const CategoryBanner = ({ pathname }: CategoryBannerProps) => {
 
         return (
             <Box position="relative" onMouseEnter={onOpen} onMouseLeave={onClose}>
-                <Link key={element.url} href={element.url}><Heading color={pathname.startsWith(element.url) ? "cyan.500" : "white"}
+                <Link key={element.url} href={element.url}><Heading _hover={{ color: 'cyan.700' }} color={pathname.startsWith(element.url) ? "cyan.500" : "white"}
                     marginTop={"5px"} fontSize={{ base: "lg", md: "xl" }} mb={4}>{element.name}</Heading></Link>
 
                 {isOpen && (
@@ -105,7 +105,7 @@ export const CategoryBanner = ({ pathname }: CategoryBannerProps) => {
         return (
             <GridItem
             >
-                {children}
+                <Text _hover={{ color: 'cyan.900' }}>{children}</Text>
                 {data.map((area: string) => {
                     return (
                         <GridItem key={area}
@@ -124,33 +124,33 @@ export const CategoryBanner = ({ pathname }: CategoryBannerProps) => {
 
 
 
-        return (
-            <Box  className="gradient-background grid sm:grid-cols-4 lg:grid-cols-12 lgz-100" w='100%' gap={5} opacity={1} backgroundPosition={"center"} h={"100px"} alignItems={"center"} textAlign={"left"} color={"white"} paddingTop={"10px"} paddingInline={"30px"}>
-                <GridItem colSpan={{base:4, md:2}}>
-                    <Link href={"/"}><Heading fontSize={{ base: "4xl", md: "5xl" }} mb={4}>FIT-Shape.</Heading></Link>
-                </GridItem>
-                <MenuWithDropdown element={{ name: "Exercises", url: "/exercises" }}>
-                    <Grid templateColumns="max-content max-content max-content" gap={4} p={4}>
-                        <DropdownItem slug="focus-areas" data={areasData}>
-                            <Heading px={4} fontSize={"md"}>
-                                <Link href={"/exercises/focus-areas"}>Exercises by Area</Link>
-                            </Heading>
-                        </DropdownItem>
-                        <DropdownItem slug="focus-areas/targets" data={targetsData}>
-                            <Heading px={4} fontSize={"md"}>
-                                <Link href={"/exercises/focus-areas/targets"}>Exercises by Targets</Link>
-                            </Heading>
-                        </DropdownItem>
-                        <DropdownItem slug="equipment" data={equipmentsData}><Heading px={4} fontSize={"md"}>
-                            <Link href={"/equipment"}>Exercises by Equipments</Link>
+    return (
+        <Box className="gradient-background grid sm:grid-cols-4 lg:grid-cols-12 lgz-100" w='100%' gap={5} opacity={1} backgroundPosition={"center"} h={"100px"} alignItems={"center"} textAlign={"left"} color={"white"} paddingTop={"10px"} paddingInline={"30px"}>
+            <GridItem colSpan={{ base: 4, md: 2 }}>
+                <Link href={"/"}><Heading fontSize={{ base: "4xl", md: "5xl" }} mb={4}>FIT-Shape.</Heading></Link>
+            </GridItem>
+            <MenuWithDropdown element={{ name: "Exercises", url: "/exercises" }}>
+                <Grid templateColumns="max-content max-content max-content" gap={4} p={4}>
+                    <DropdownItem slug="focus-areas" data={areasData}>
+                        <Heading px={4} fontSize={"md"}>
+                            <Link href={"/exercises/focus-areas"}>Exercises by Area</Link>
                         </Heading>
-                        </DropdownItem>
-                    </Grid>
-                </MenuWithDropdown>
-                <GridItem colSpan={2}>
-                    <Link key="equipment" href="/equipment"><Heading color={pathname.startsWith("/equipment") ? "cyan.500" : "white"}
-                        marginTop={"5px"} fontSize={{ base: "lg", md: "xl" }} mb={4}>Equipment</Heading></Link>
-                </GridItem>
-            </Box>
-        )
+                    </DropdownItem>
+                    <DropdownItem slug="focus-areas/targets" data={targetsData}>
+                        <Heading px={4} fontSize={"md"}>
+                            <Link href={"/exercises/focus-areas/targets"}>Exercises by Targets</Link>
+                        </Heading>
+                    </DropdownItem>
+                    <DropdownItem slug="equipment" data={equipmentsData}><Heading px={4} fontSize={"md"}>
+                        <Link href={"/equipment"}>Exercises by Equipments</Link>
+                    </Heading>
+                    </DropdownItem>
+                </Grid>
+            </MenuWithDropdown>
+            <GridItem colSpan={2}>
+                <Link key="equipment" href="/equipment"><Heading color={pathname.startsWith("/equipment") ? "cyan.500" : "white"}
+                    marginTop={"5px"} _hover={{ color: 'cyan.700' }} fontSize={{ base: "lg", md: "xl" }} mb={4}>Equipment</Heading></Link>
+            </GridItem>
+        </Box>
+    )
 }

@@ -3,8 +3,8 @@ import Head from "next/head";
 import React, { useEffect, useState } from "react";
 import { fetchBodyParts } from "@/api/exercises/body-parts";
 import { BasicCard } from "@/app/custom-components/BasicCard/BasicCard";
-import { loadingState } from "../../utils/functions";
-import { Heading } from "@chakra-ui/react";
+import { loadingState } from "@/app/utils/functions"
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, Heading, Text } from "@chakra-ui/react";
 
 export default function FocusAreasPage() {
 
@@ -34,7 +34,28 @@ export default function FocusAreasPage() {
                 <title>Body Parts</title>
             </Head>
             <div className="pb-10">
-                <div className="items-center sm:items-start min-h-screen">
+            <div className="items-center sm:items-start min-h-screen p-5">
+                <Breadcrumb data-testid="breadcrumb">
+                        <BreadcrumbItem>
+                            <BreadcrumbLink href='/'>
+                                Home
+                            </BreadcrumbLink>
+                        </BreadcrumbItem>
+                        <BreadcrumbItem>
+                            <BreadcrumbLink href='/exercises'>
+                                Exercises
+                            </BreadcrumbLink>
+                        </BreadcrumbItem>
+                        <BreadcrumbItem isCurrentPage>
+                           <Text>Focus Areas</Text>
+                        </BreadcrumbItem>
+                    </Breadcrumb>
+                    <div className="flex items-center align-center justify-center">
+                            <Heading size={"2xl"}>Focus Areas</Heading>
+                    </div>
+                    <div className="flex items-center align-center justify-center mt-6">
+                            <Heading size={"lg"}>Focus on the muscles that matter most of your progress!</Heading>
+                    </div>
                 {error && (
               <div data-testid="error-state">
                 <Heading>There was an error while fetching data, please check the logs</Heading>

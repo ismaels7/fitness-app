@@ -3,7 +3,7 @@ import { fetchExercise } from "@/api/exercises/basic";
 import { Box, Flex, Heading, Text, Image, List, ListItem, Tabs, Grid, GridItem, TabList, Tab, TabPanels, TabPanel, OrderedList, Breadcrumb, BreadcrumbItem, BreadcrumbLink } from "@chakra-ui/react";
 import Head from "next/head";
 import React, { use, useEffect, useState } from "react";
-import { formatTitle, loadingState } from "../../utils/functions";
+import { formatTitle, loadingState } from "@/app/utils/functions"
 
 export default function ExercisePage(props: { params: Promise<{ exerciseId: string }> }) {
   const params = use(props.params);

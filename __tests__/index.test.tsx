@@ -1,64 +1,89 @@
-import { render, screen } from "@testing-library/react";
-import Home from "../src/app/page";
-import "@testing-library/jest-dom";
 import React from "react";
+import { render, screen, act, waitFor } from "@testing-library/react";
+import Home from "@/app/page";
+import { ChakraProvider } from "@chakra-ui/react";
 
-jest.mock("@/app/custom-components/Banner/Banner", () => ({
-  Banner: () => <div data-testid="mock-banner">Mock Banner</div>,
-}));
 
-jest.mock("@/app/custom-components/CategoryTile/CategoryTile", () => ({
-  CategoryTile: ({ title }: { title: string }) => (
-    <div data-testid="mock-category">{title}</div>
-  ),
-}));
 
-jest.mock("@/app/custom-components/TrendingList/TrendingList", () => ({
-  TrendingList: ({ list }: { list: Array<{ id: string; name: string }> }) => (
-    <div data-testid="mock-trending-list">
-      {list.map((item) => (
-        <div key={item.id}>{item.name}</div>
-      ))}
-    </div>
-  ),
-}));
+const mockFetchExercises = jest.fn();
+const mockFetchEquipments = jest.fn();
 
-describe("Home Component", () => {
-  it("renders without crashing", () => {
-    render(<Home />);
-    const mainElement = screen.getByTestId("main");
-    expect(mainElement).toBeInTheDocument();
-  });
-
-  it("renders the Banner component", () => {
-    render(<Home />);
-    const banner = screen.getByTestId("mock-banner");
-    expect(banner).toBeInTheDocument();
-  });
-
-  it("renders the correct number of CategoryTiles", () => {
-    render(<Home />);
-    const categories = screen.getAllByTestId("mock-category");
-    expect(categories).toHaveLength(3); 
-    expect(categories[0]).toHaveTextContent("Focus Areas");
-    expect(categories[1]).toHaveTextContent("Targets");
-    expect(categories[2]).toHaveTextContent("Equipment");
-  });
-
-  it("renders two TrendingList components", () => {
-    render(<Home />);
-    const trendingLists = screen.getAllByTestId("mock-trending-list");
-    expect(trendingLists).toHaveLength(2);
-  });
-
-  it("renders footer links", () => {
-    render(<Home />);
-    const githubLink = screen.getByRole("link", { name: "Github" });
-    const linkedInLink = screen.getByRole("link", { name: "LinkedIn" });
-    const learnLink = screen.getByRole("link", { name: "Learn" });
-
-    expect(githubLink).toBeInTheDocument();
-    expect(linkedInLink).toBeInTheDocument();
-    expect(learnLink).toBeInTheDocument();
-  });
+jest.mock("@/api/exercises/basic", () => {
+  return {
+    fetchExercises: () => mockFetchExercises()
+  }
 });
+
+jest.mock("@/api/exercises/equipment", () => {
+  return {
+    fetchEquipments: () => mockFetchEquipments()
+  }
+});
+
+
+const mockExercises = [
+  { id: "1", name: "Push-up" },
+  { id: "2", name: "Squat" },
+  { id: "3", name: "Lunge" },
+];
+
+const mockEquipment = [
+  { id: "1", name: "Dumbbell" },
+  { id: "2", name: "Kettlebell" },
+  { id: "3", name: "Resistance Band" },
+];
+
+describe("Home Page", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+ 
+  it("renders the loading state initially", async () => {
+
+    await act( () => {
+      render(<Home  />);
+    });
+
+    waitFor(()=> {
+        expect(screen.queryAllByTestId("loading-state")).toHaveLength(2);
+    })
+  });
+
+
+  it("renders trending exercises and equipment after loading", async () => {
+    mockFetchExercises.mockResolvedValueOnce(mockExercises);
+    mockFetchEquipments.mockResolvedValueOnce(mockEquipment);
+
+    await act(async () => {
+      render(
+        <ChakraProvider>
+          <Home />
+        </ChakraProvider>
+      );
+    });
+
+    await waitFor(() => {
+      expect(screen.getByText("Trending Exercises")).toBeInTheDocument();
+      mockExercises.forEach((exercise) => {
+        expect(screen.getByText(exercise.name)).toBeInTheDocument();
+      });
+
+      expect(screen.getByText("Trending Equipment")).toBeInTheDocument();
+      mockEquipment.forEach((equipment) => {
+        expect(screen.getByText(equipment.name)).toBeInTheDocument();
+      });
+    });
+  });
+
+  it("displays an error message when fetching data fails", async () => {
+    mockFetchExercises.mockRejectedValueOnce({name: "error"});
+
+    await act(async () => {
+      render(<Home />);
+    });
+
+    await waitFor(() => {
+      expect(screen.getByTestId("error-exercises-state")).toBeInTheDocument()
+    });
+  });
+}); 

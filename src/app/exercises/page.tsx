@@ -5,13 +5,11 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { ExerciseCard } from "../custom-components/ExerciseCard/ExerciseCard";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, Button, Heading } from "@chakra-ui/react";
-import { formatTitle, loadingState } from "../utils/functions";
+import { loadingState } from "../utils/functions";
 
 export default function ExercisesPage() {
     const [displayData, setDisplayData] = useState<any[]>([])
-    const [exercisesData, setExercisesData] = useState<any[]>([])
     const [error, setError] = useState(false)
-    const [roundData, setRoundData] = useState<any[]>()
     const [isLoading, setIsLoading] = useState(true)
     const [isRoundLoading, setIsRoundLoading] = useState(true)
     const [offset, setOffset] = useState(0)
@@ -22,7 +20,6 @@ export default function ExercisesPage() {
         if (data.length < perPage) {
             setShowLoadMore(false)
         }
-        setRoundData(data)
         setDisplayData(displayData.concat(data))
     }
     const getExercises = async () => {

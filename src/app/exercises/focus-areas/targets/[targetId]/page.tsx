@@ -4,7 +4,7 @@ import { AdvancedCard } from "@/app/custom-components/AdvancedCard/AdvancedCard"
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, Grid, Heading } from "@chakra-ui/react";
 import Head from "next/head";
 import React, { use, useEffect, useState } from "react";
-import { formatTitle, loadingState } from "../../../../utils/functions";
+import { formatTitle, loadingState } from "@/app/utils/functions"
 
 
 export default function Target(props: { params: Promise<{ targetId: string }> }) {
