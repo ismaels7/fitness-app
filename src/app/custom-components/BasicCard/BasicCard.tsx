@@ -1,7 +1,7 @@
 import { Card, Box, Button, CardBody, CardFooter, Heading } from "@chakra-ui/react"
 import Link from "next/link"
 import React from "react"
-import { formatTitle } from "../../utils/functions"
+import { formatTitle } from "@/app/utils/functions"
 
 interface BasicCardProps {
     item: string,

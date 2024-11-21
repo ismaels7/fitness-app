@@ -1,7 +1,7 @@
 
 import { Box, Flex, Heading, Text, Image, List, ListItem, Tabs, Grid, GridItem, TabList, Tab, TabPanels, TabPanel, OrderedList } from "@chakra-ui/react";
 import React from "react";
-import { formatTitle } from "../../utils/functions";
+import { formatTitle } from "@/app/utils/functions";
 interface AdvancedCardProps {
     exercise: {
         name: string,
@@ -24,7 +24,7 @@ export const AdvancedCard = ({exercise}:AdvancedCardProps ) => {
       </Box>
       <Box flex={1} borderRadius={"md"} p={6} h={{ base: "300px", md: "500px" }} overflowY={"auto"}>
 
-        <Tabs /* value={value} onValueChange={(e) => setValue(e.value)} */>
+        <Tabs>
           <TabList>
             <Tab >Instructions</Tab>
             <Tab>Details</Tab>
@@ -56,7 +56,7 @@ export const AdvancedCard = ({exercise}:AdvancedCardProps ) => {
                 <List>
                   {exercise.secondaryMuscles.map((muscle: string, index: number) => {
                     return (
-                      <ListItem fontSize={"xl"} key={index}>{formatTitle(muscle)}</ListItem>
+                      <ListItem fontSize={"xl"} key={`${muscle}-${index}`}>{formatTitle(muscle)}</ListItem>
                     )
                   })}
                 </List>

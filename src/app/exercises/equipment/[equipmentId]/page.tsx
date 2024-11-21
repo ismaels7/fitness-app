@@ -4,8 +4,8 @@ import { AdvancedCard } from "@/app/custom-components/AdvancedCard/AdvancedCard"
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, Grid, Heading, Text } from "@chakra-ui/react";
 import Head from "next/head";
 import React, { use, useEffect, useState } from "react";
-import { fetchExerciseByEquipment } from "../../../../api/exercises/equipment";
-import { formatTitle, loadingState } from "../../../utils/functions";
+import { fetchExerciseByEquipment } from "@/api/exercises/equipment";
+import { formatTitle, loadingState } from "@/app/utils/functions";
 
 export default function ExerciseByEquipmentPage(props: {
     params: Promise<{ equipmentId: string }>
@@ -57,7 +57,7 @@ export default function ExerciseByEquipmentPage(props: {
                             </BreadcrumbLink>
                         </BreadcrumbItem>
                         <BreadcrumbItem isCurrentPage>
-                           <Text colorScheme={"cyan"}>{formatTitle(equipmentId)}</Text>
+                           <Text>{formatTitle(equipmentId)}</Text>
                         </BreadcrumbItem>
                     </Breadcrumb>
                     <div className="flex items-center justify-center">

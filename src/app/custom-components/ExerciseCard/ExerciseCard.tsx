@@ -1,7 +1,7 @@
 import { Card, CardBody, CardFooter, Button, Image, Text, Box, HStack, Badge, Heading, Stack } from "@chakra-ui/react"
 import { useRouter } from "next/navigation"
 import React from "react"
-import { formatTitle } from "../../utils/functions"
+import { formatTitle } from "@/app/utils/functions"
 
 interface ExerciseCardProps {
   exercise: any

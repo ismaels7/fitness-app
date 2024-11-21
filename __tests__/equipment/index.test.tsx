@@ -58,14 +58,12 @@ describe("EquipmentPage Component", () => {
       render(<EquipmentPage />);
     });
 
-    // Verifica que no hay tarjetas renderizadas
     await waitFor(() => {
       expect(screen.queryByText("Dumbbell")).not.toBeInTheDocument();
       expect(screen.queryByText("Barbell")).not.toBeInTheDocument();
       expect(screen.queryByText("Treadmill")).not.toBeInTheDocument();
     });
 
-    // Podrías agregar un mensaje para el estado vacío en el componente y verificarlo aquí si existe
   });
 });
 

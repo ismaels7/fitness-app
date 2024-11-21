@@ -1,6 +1,6 @@
 import React, {act} from "react";
 import { render, screen, waitFor } from "@testing-library/react";
-import Target from "@/app/exercises/focus-areas/targets/[targetId]/page"; // Ajusta el path según sea necesario
+import Target from "@/app/exercises/focus-areas/targets/[targetId]/page"; 
 
 const mockFetchExercisesByTarget = jest.fn();
 jest.mock("@/api/exercises/target", () => ({

@@ -34,6 +34,7 @@ describe("BodyPartsPage Component", () => {
     });
 
     await waitFor(() => {
+      expect(screen.getByTestId("breadcrumb"))
       expect(screen.getByText("Arms")).toBeInTheDocument();
       expect(screen.getByText("Legs")).toBeInTheDocument();
       expect(screen.getByText("Back")).toBeInTheDocument();

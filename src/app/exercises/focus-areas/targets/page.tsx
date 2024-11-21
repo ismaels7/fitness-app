@@ -3,8 +3,8 @@ import Head from "next/head";
 import React, { useEffect, useState } from "react";
 import { fetchTargets } from "@/api/exercises/target";
 import { BasicCard } from "@/app/custom-components/BasicCard/BasicCard";
-import { loadingState } from "../../../utils/functions";
-import { Heading } from "@chakra-ui/react";
+import { loadingState } from "@/app/utils/functions"
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, Heading, Text } from "@chakra-ui/react";
 
 export default function TargetPage() {
 
@@ -34,15 +34,41 @@ export default function TargetPage() {
                 <title>Targets</title>
             </Head>
             <div className="pb-10">
-                <div className="items-center sm:items-start min-h-screen">
+                <div className="items-center sm:items-start min-h-screen p-5">
+                <Breadcrumb data-testid="breadcrumb">
+                        <BreadcrumbItem>
+                            <BreadcrumbLink href='/'>
+                                Home
+                            </BreadcrumbLink>
+                        </BreadcrumbItem>
+                        <BreadcrumbItem>
+                            <BreadcrumbLink href='/exercises'>
+                                Exercises
+                            </BreadcrumbLink>
+                        </BreadcrumbItem>
+                        <BreadcrumbItem>
+                            <BreadcrumbLink href='/exercises/focus-areas'>
+                                Focus Areas
+                            </BreadcrumbLink>
+                        </BreadcrumbItem>
+                        <BreadcrumbItem isCurrentPage>
+                           <Text>Targets</Text>
+                        </BreadcrumbItem>
+                    </Breadcrumb>
+                    <div className="flex items-center align-center justify-center">
+                            <Heading size={"2xl"}>Targets</Heading>
+                    </div>
+                    <div className="flex items-center align-center justify-center mt-6">
+                            <Heading size={"lg"}>Set your sights on your goals and unlock your full potenital!</Heading>
+                    </div>
                 {error && (
               <div data-testid="error-state">
                 <Heading>There was an error while fetching data, please check the logs</Heading>
               </div>)}
-                        <div className="ml-20 pt-10">
+                        <div className="ml-20 pt-10 pr-20">
                         {isLoading && loadingState({items: 12, grid: 4})}
                         </div>
-                    <div className="grid grid-cols-1 gap-5 mx-8 my-20 md:grid-cols-2 lg:grid-cols-4">
+                    <div className="grid grid-cols-1 gap-5 mx-8 my-20 md:grid-cols-2 lg:grid-cols-4 pl-6">
                         {targetsData && targetsData.length > 0 && (
                             <>
                                 {targetsData.map((item: string) => {
