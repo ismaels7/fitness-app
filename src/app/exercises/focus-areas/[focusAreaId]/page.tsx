@@ -7,8 +7,8 @@ import React, { use, useEffect, useState } from "react";
 import { formatTitle, loadingState } from "../../../utils/functions";
 
 
-export default function ExercisesByAreaPage({ params }: { params: Promise<{ focusAreaId: string }> }) {
-  const { focusAreaId } = use(params);
+export default function ExercisesByAreaPage({ params }: { params: { focusAreaId: string } }) {
+  const focusAreaId = params.focusAreaId
   const [error, setError] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
   const [exerciseData, setExerciseData] = useState<any>()
@@ -41,7 +41,10 @@ export default function ExercisesByAreaPage({ params }: { params: Promise<{ focu
           <Heading size={"4xl"}>{formatTitle(focusAreaId)} Exercises</Heading>
           <Grid p={10} alignContent={"center"} justifyContent={"center"}>
             {isLoading && loadingState({ items: 4, grid: 12, colSpan: 12, width: "700px", height: "500px" })}
-            {error && <>THERE WAS AN ERROR WHILE FETCHING EXERCISES</>}
+            {error && (
+              <div data-testid="error-state">
+                <Heading>There was an error while fetching data, please check the logs</Heading>
+              </div>)}
             {exerciseData && exerciseData.map((exercise: any) => {
               return <AdvancedCard key={exercise.name} exercise={exercise} />
             })}

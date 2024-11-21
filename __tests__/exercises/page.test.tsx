@@ -80,7 +80,7 @@ describe("ExercisesPage Component", () => {
             render(<ExercisesPage />)
         })
 
-        waitFor(() => expect(screen.getByTestId("error-message")).toBeInTheDocument())
+        waitFor(() => expect(screen.getByTestId("error-state")).toBeInTheDocument())
     });
 
     it("renders load more button", async () => {

@@ -1,5 +1,5 @@
 
-import { Box, Flex, Heading, Text, Image, List, ListItem, Tabs, Grid, GridItem, TabList, Tab, TabPanel } from "@chakra-ui/react";
+import { Box, Flex, Heading, Text, Image, List, ListItem, Tabs, Grid, GridItem, TabList, Tab, TabPanels, TabPanel } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { formatTitle } from "../../utils/functions";
 interface AdvancedCardProps {
@@ -30,7 +30,8 @@ export const AdvancedCard = ({exercise}:AdvancedCardProps ) => {
             <Tab>Details</Tab>
           </TabList>
 
-          <TabPanel >
+          <TabPanels>
+            <TabPanel>
             <List as={"ol"}>
               {exercise.instructions.map((instruction: string, index: number) => {
                 return (
@@ -38,8 +39,9 @@ export const AdvancedCard = ({exercise}:AdvancedCardProps ) => {
                 )
               })}
             </List>
-          </TabPanel>
-          <TabPanel >
+            </TabPanel>
+
+            <TabPanel>
             <Grid gap={3}>
               <GridItem>
                 <Heading size={"xl"} alignContent={"center"} justifyContent={"center"}>Area</Heading>
@@ -64,7 +66,8 @@ export const AdvancedCard = ({exercise}:AdvancedCardProps ) => {
                 <Text>{exercise.equipment}</Text>
               </GridItem>
             </Grid>
-          </TabPanel>
+            </TabPanel>
+          </TabPanels>
         </Tabs>
       </Box>
     </Flex>

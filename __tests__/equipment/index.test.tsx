@@ -45,8 +45,8 @@ describe("EquipmentPage Component", () => {
         })
 
         await waitFor(() => {
-            expect(screen.getByTestId("error-message")).toBeInTheDocument(),
-            expect(screen.getByText('THERE WAS AN ERROR WHILE FETCHING EQUIPMENT')).toBeInTheDocument()
+            expect(screen.getByTestId("error-state")).toBeInTheDocument(),
+            expect(screen.getByText('There was an error while fetching data, please check the logs')).toBeInTheDocument()
         })
 
   });

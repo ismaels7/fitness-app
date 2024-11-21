@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { fetchBodyParts } from "@/api/exercises/body-parts";
 import { BasicCard } from "@/app/custom-components/BasicCard/BasicCard";
 import { loadingState } from "../../utils/functions";
+import { Heading } from "@chakra-ui/react";
 
 export default function FocusAreasPage() {
 
@@ -34,7 +35,10 @@ export default function FocusAreasPage() {
             </Head>
             <div className="pb-10">
                 <div className="items-center sm:items-start min-h-screen">
-                    {error && <>THERE WAS AN ERROR WHILE FETCHING BODY PARTS</>}
+                {error && (
+              <div data-testid="error-state">
+                <Heading>There was an error while fetching data, please check the logs</Heading>
+              </div>)}
                     <div className="p-10 ml-5">
                         {isLoading && loadingState({items: 10, grid: 5})}
                     </div>

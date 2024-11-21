@@ -7,8 +7,8 @@ import React, { use, useEffect, useState } from "react";
 import { formatTitle, loadingState } from "../../../../utils/functions";
 
 
-export default function Target({ params }: { params: Promise<{ targetId: string }> }) {
-    const { targetId } = use(params);
+export default function Target({ params }: { params: { targetId: string } }) {
+    const targetId = params.targetId
     const [error, setError] = useState(false)
     const [isLoading, setIsLoading] = useState(true)
     const [targetExercises, setTargetExercises] = useState<any>()
@@ -38,8 +38,11 @@ export default function Target({ params }: { params: Promise<{ targetId: string 
                 <div className="items-center min-h-screen">
                     <Heading size={"4xl"}>{formatTitle(targetId)} Exercises</Heading>
                     <Grid p={10} alignContent={"center"} justifyContent={"center"}>
-                        {isLoading && loadingState({items:4, grid:12, colSpan:12, width:"700px", height:"400px"})}
-                        {error && <>THERE WAS AN ERROR WHILE FETCHING EXERCISES BY TARGET</>}
+                        {isLoading && loadingState({ items: 4, grid: 12, colSpan: 12, width: "700px", height: "400px" })}
+                        {error && (
+                            <div data-testid="error-state">
+                                <Heading>There was an error while fetching data, please check the logs</Heading>
+                            </div>)}
                         {targetExercises && targetExercises.map((exercise: any) => {
                             return <AdvancedCard key={exercise.name} exercise={exercise} />
                         })}

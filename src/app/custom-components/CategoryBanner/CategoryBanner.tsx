@@ -23,7 +23,7 @@ export const CategoryBanner = ({ pathname }: CategoryBannerProps) => {
     useEffect(() => {
         // getBodyParts()
         // getTargets()
-        //getEquipments()
+        // getEquipments()
     }, [])
 
     const getBodyParts = async () => {

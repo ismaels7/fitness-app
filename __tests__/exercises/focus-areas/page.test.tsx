@@ -52,7 +52,7 @@ describe("BodyPartsPage Component", () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText("THERE WAS AN ERROR WHILE FETCHING BODY PARTS")
+        screen.getByText("There was an error while fetching data, please check the logs")
       ).toBeInTheDocument();
     });
   });
