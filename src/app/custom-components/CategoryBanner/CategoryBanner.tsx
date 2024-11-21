@@ -142,7 +142,7 @@ export const CategoryBanner = ({ pathname }: CategoryBannerProps) => {
                         </Heading>
                     </DropdownItem>
                     <DropdownItem slug="equipment" data={equipmentsData}><Heading px={4} fontSize={"md"}>
-                        <Link href={"/equipment"}>Exercises by Equipments</Link>
+                        <Link href={"/exercises/equipment"}>Exercises by Equipments</Link>
                     </Heading>
                     </DropdownItem>
                 </Grid>
