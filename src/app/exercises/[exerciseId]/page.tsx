@@ -4,11 +4,13 @@ import { Box, Flex, Heading, Text, Image, List, ListItem, Tabs, Grid, GridItem, 
 import Head from "next/head";
 import React, { use, useEffect, useState } from "react";
 import { formatTitle, loadingState } from "../../utils/functions";
+import { useRouter } from 'next/router'
+ 
 
-
-export default function ExercisePage({ params }: { params:{ exerciseId: string } }) {
-
-  const exerciseId = params.exerciseId
+export default function ExercisePage() {
+  const router = useRouter()
+const {exerciseId} = router.query
+  //const exerciseId = params.exerciseId
   const [error, setError] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
   const [exerciseData, setExerciseData] = useState<any>()

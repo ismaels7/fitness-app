@@ -7,7 +7,8 @@ import React, { use, useEffect, useState } from "react";
 import { formatTitle, loadingState } from "../../../../utils/functions";
 
 
-export default function Target({ params }: { params: { targetId: string } }) {
+export default function Target(props: { params: Promise<{ targetId: string }> }) {
+    const params = use(props.params);
     const targetId = params.targetId
     const [error, setError] = useState(false)
     const [isLoading, setIsLoading] = useState(true)

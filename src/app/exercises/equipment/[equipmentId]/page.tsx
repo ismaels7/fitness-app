@@ -8,11 +8,12 @@ import { fetchExerciseByEquipment } from "../../../../api/exercises/equipment";
 import { formatTitle, loadingState } from "../../../utils/functions";
 
 export default function ExerciseByEquipmentPage(props: {
-    params: { equipmentId: string }
+    params: Promise<{ equipmentId: string }>
   }) {
+    const params = use(props.params);
 
-//export default function ExerciseByEquipmentPage({ params }: { params: { equipmentId: string } }) {
-    const {equipmentId} =  props.params
+    //export default function ExerciseByEquipmentPage({ params }: { params: { equipmentId: string } }) {
+    const {equipmentId} =  params
     const [error, setError] = useState(false)
     const [isLoading, setIsLoading] = useState(true)
     const [exerciseData, setExerciseData] = useState<any>()

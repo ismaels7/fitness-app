@@ -14,7 +14,7 @@ const mockExerciseData = [
     { name: "Squat", bodyPart: "Legs", id: "2", gifUrl: "", target: "target", equipment: "equipment", instructions: [] },
   ];
 
-describe.skip("Target Component", () => {
+describe("Target Component", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
@@ -23,7 +23,7 @@ describe.skip("Target Component", () => {
     mockFetchExercisesByTarget.mockResolvedValueOnce(mockExerciseData);
 
     await act(async () => {
-      render(<Target params={{ targetId: "pectorals"}} />);
+      render(<Target params={Promise.resolve({ targetId: "pectorals"})} />);
     });
 
     await waitFor(() => {
@@ -35,7 +35,7 @@ describe.skip("Target Component", () => {
     mockFetchExercisesByTarget.mockResolvedValueOnce(mockExerciseData);
 
     await act(async () => {
-        render(<Target params={{ targetId: "pectorals"}} />);
+        render(<Target params={Promise.resolve({ targetId: "pectorals"})} />);
     });
 
     await waitFor(() => {
@@ -50,7 +50,7 @@ describe.skip("Target Component", () => {
     mockFetchExercisesByTarget.mockRejectedValueOnce(new Error("Fetch error"));
 
     await act(async () => {
-        render(<Target params={{ targetId: "pectorals"}} />);
+        render(<Target params={Promise.resolve({ targetId: "pectorals"})} />);
     });
 
     await waitFor(() => {
@@ -64,7 +64,7 @@ describe.skip("Target Component", () => {
     mockFetchExercisesByTarget.mockResolvedValueOnce([]);
 
     await act(async () => {
-        render(<Target params={{ targetId: "pectorals"}} />);
+        render(<Target params={Promise.resolve({ targetId: "pectorals"})} />);
     });
 
 

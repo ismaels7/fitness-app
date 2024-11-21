@@ -7,7 +7,8 @@ import React, { use, useEffect, useState } from "react";
 import { formatTitle, loadingState } from "../../../utils/functions";
 
 
-export default function ExercisesByAreaPage({ params }: { params: { focusAreaId: string } }) {
+export default function ExercisesByAreaPage(props: { params: Promise<{ focusAreaId: string }> }) {
+  const params = use(props.params);
   const focusAreaId = params.focusAreaId
   const [error, setError] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
