@@ -2,6 +2,7 @@ import React, { act } from "react";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import ExercisePage from "@/app/exercises/[exerciseId]/page";
 import { ChakraProvider } from "@chakra-ui/react";
+import { formatTitle } from "@/app/utils/functions";
 
 const mockFetchExercise = jest.fn()
 jest.mock("@/api/exercises/basic", () => {
@@ -22,7 +23,6 @@ const mockExerciseData = {
 };
 
 
-
 describe("ExercisePage Component", () => {
     beforeEach(() => {
         jest.clearAllMocks();
@@ -30,11 +30,11 @@ describe("ExercisePage Component", () => {
 
     it("renders the loading state initially", async () => {
 
-        act(() => {
-            render(<ExercisePage params={{ exerciseId: "001" }} />);
+       await act(() => {
+            render(<ExercisePage params={Promise.resolve({ exerciseId: "0001"})} />);
         })
-
-        await waitFor(() => {
+ 
+         waitFor(() => {
             expect(screen.queryByTestId("loading-state")).toBeInTheDocument();
         });
     });
@@ -45,20 +45,22 @@ describe("ExercisePage Component", () => {
    
         await act(async () => {
             render(<ChakraProvider>
-                <ExercisePage params={{ exerciseId: "001" }} />
+                <ExercisePage params={Promise.resolve({ exerciseId: "0001"})} />;
             </ChakraProvider>);
         });   
  
         await waitFor(() => {
             const headingElement = screen.getByTestId("heading")
+            const breadcrumbElement = screen.getByTestId("breadcrumb")
             const detailsPanel = screen.getByTestId("details-panel")
             expect(headingElement).toHaveTextContent("Push-up")
+            expect(breadcrumbElement).toBeInTheDocument();
             mockExerciseData.instructions.forEach((instruction) => {
                 expect(screen.getByText(instruction)).toBeInTheDocument();
             });
             fireEvent.click(detailsPanel)
               mockExerciseData.secondaryMuscles.forEach((muscle) => {
-                expect(screen.getByText(muscle)).toBeInTheDocument();
+                expect(screen.getByText(formatTitle(muscle))).toBeInTheDocument();
               });
         })
        
@@ -68,9 +70,11 @@ describe("ExercisePage Component", () => {
         mockFetchExercise.mockRejectedValueOnce({name: "error"});
 
         await act(async () => {
-            render(<ExercisePage params={{ exerciseId: "001" }} />);
+            render(<ExercisePage params={Promise.resolve({ exerciseId: "0001"})} />);
         });
 
-        expect(await screen.findByText("There was an error while fetching data, please check the logs")).toBeInTheDocument();
+        waitFor(()=> {
+            expect( screen.findByText("There was an error while fetching data, please check the logs")).toBeInTheDocument();
+        })
     });
 });

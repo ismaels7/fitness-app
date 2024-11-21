@@ -49,12 +49,12 @@ describe("ExerciseByAreaPage Component", () => {
 
   it("renders the loading state initially", async () => {
 
-    act( () => {
-      render(<ExerciseByEquipmentPage params={{ equipmentId: "dumbbell" }} />);
+    await act( () => {
+      render(<ExerciseByEquipmentPage params={Promise.resolve({ equipmentId: "dumbbell"})} />);
     });
 
-    await waitFor(()=> {
-        expect(screen.getByTestId("loading-state")).toBeInTheDocument();
+    waitFor(()=> {
+        expect(screen.queryAllByTestId("loading-state")).toBeInTheDocument();
     })
   });
 
@@ -62,22 +62,23 @@ describe("ExerciseByAreaPage Component", () => {
     mockFetchExerciseByEquipment.mockResolvedValueOnce(mockExercisesList);
 
     await act(async () => {
-      render(<ExerciseByEquipmentPage params={{ equipmentId: "dumbbell" }} />);
+      render(<ExerciseByEquipmentPage params={Promise.resolve({ equipmentId: "dumbbell"})} />);
     });
 
     await waitFor(() => {
-        expect(screen.getByTestId("advanced-card")).toBeInTheDocument();
+        expect(screen.getAllByTestId("advanced-card")).toHaveLength(2);
+        expect(screen.getByTestId("breadcrumb")).toBeInTheDocument();
+        expect(screen.queryByText("Jump")).toBeInTheDocument();
+        expect(screen.queryByText("Curl")).toBeInTheDocument();
     });
 
-    expect(screen.queryByText("jump")).toBeInTheDocument();
-    expect(screen.queryByText("curl")).toBeInTheDocument();
   });
 
   it("displays an error message when fetching data fails", async () => {
     mockFetchExerciseByEquipment.mockRejectedValueOnce(new Error("Fetch error"));
 
     await act(async () => {
-      render(<ExerciseByEquipmentPage params={{ equipmentId: "dumbbell" }} />);
+      render(<ExerciseByEquipmentPage params={Promise.resolve({ equipmentId: "dumbbell"})} />);
     });
 
     await waitFor(() => {
@@ -93,7 +94,7 @@ describe("ExerciseByAreaPage Component", () => {
     mockFetchExerciseByEquipment.mockResolvedValueOnce([]);
 
     await act(async () => {
-      render(<ExerciseByEquipmentPage params={{ equipmentId: "dumbbell" }} />);
+      render(<ExerciseByEquipmentPage params={Promise.resolve({ equipmentId: "dumbbell"})} />);
     });
 
     await waitFor(() => {

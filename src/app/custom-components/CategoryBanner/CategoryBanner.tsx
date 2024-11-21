@@ -8,6 +8,7 @@ import { useEffect, useState } from "react"
 import { useDisclosure } from '@chakra-ui/react'
 import { fetchEquipments } from "@/api/exercises/equipment"
 import React from "react"
+import { formatTitle } from "@/app/utils/functions"
 
 interface CategoryBannerProps {
     pathname: string,
@@ -21,9 +22,9 @@ export const CategoryBanner = ({ pathname }: CategoryBannerProps) => {
     const [equipmentsData, setEquipmentsData] = useState<any[]>([])
 
     useEffect(() => {
-        // getBodyParts()
-        // getTargets()
-        // getEquipments()
+        getBodyParts()
+        getTargets()
+        getEquipments()
     }, [])
 
     const getBodyParts = async () => {
@@ -112,7 +113,7 @@ export const CategoryBanner = ({ pathname }: CategoryBannerProps) => {
                             py={1}
                             borderRadius="md"
                             _hover={{ bg: 'cyan.100', color: 'cyan.800' }}>
-                            <Link href={`/exercises/${slug}/${area}`} >{area}</Link>
+                            <Link href={`/exercises/${slug}/${area}`} >{formatTitle(area)}</Link>
                         </GridItem>
                     )
                 })}
@@ -125,7 +126,7 @@ export const CategoryBanner = ({ pathname }: CategoryBannerProps) => {
 
         return (
             <Box  className="gradient-background grid sm:grid-cols-4 lg:grid-cols-12 lgz-100" w='100%' gap={5} opacity={1} backgroundPosition={"center"} h={"100px"} alignItems={"center"} textAlign={"left"} color={"white"} paddingTop={"10px"} paddingInline={"30px"}>
-                <GridItem colSpan={{base:4, lg:2}}>
+                <GridItem colSpan={{base:4, md:2}}>
                     <Link href={"/"}><Heading fontSize={{ base: "4xl", md: "5xl" }} mb={4}>FIT-Shape.</Heading></Link>
                 </GridItem>
                 <MenuWithDropdown element={{ name: "Exercises", url: "/exercises" }}>

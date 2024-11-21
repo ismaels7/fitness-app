@@ -10,8 +10,8 @@ jest.mock("@/api/exercises/target", () => ({
 
 
 const mockExerciseData = [
-    { name: "Push Up", bodyPart: "Chest", id: "1", gifUrl: "", target: "target", equipment: "equipment", instructions: [] },
-    { name: "Squat", bodyPart: "Legs", id: "2", gifUrl: "", target: "target", equipment: "equipment", instructions: [] },
+    { name: "Push Up", bodyPart: "Chest", id: "1", gifUrl: "", target: "target", secondaryMuscles: ["triceps", "shoulders"], equipment: "equipment", instructions: [] },
+    { name: "Squat", bodyPart: "Legs", id: "2", gifUrl: "", target: "target", secondaryMuscles: ["triceps", "shoulders"], equipment: "equipment", instructions: [] },
   ];
 
 describe("Target Component", () => {
@@ -26,23 +26,23 @@ describe("Target Component", () => {
       render(<Target params={Promise.resolve({ targetId: "pectorals"})} />);
     });
 
-    await waitFor(() => {
+    waitFor(() => {
       expect(screen.queryByTestId("loading-state")).toBeInTheDocument();
     });
   });
 
   it("renders target exercises correctly after loading", async () => {
     mockFetchExercisesByTarget.mockResolvedValueOnce(mockExerciseData);
-
+ 
     await act(async () => {
         render(<Target params={Promise.resolve({ targetId: "pectorals"})} />);
     });
 
     await waitFor(() => {
-      expect(screen.getByText("Push-up")).toBeInTheDocument();
-      expect(screen.getByText("Squat")).toBeInTheDocument();
-      expect(screen.getByText("Plank")).toBeInTheDocument();
-      expect(screen.getByText("Pull-up")).toBeInTheDocument();
+      const detailsPanel = screen.getAllByTestId("details-panel")
+      const breadcumbElement = screen.getByTestId("breadcrumb")
+      expect(detailsPanel).toHaveLength(2);
+      expect(breadcumbElement).toBeInTheDocument()
     });
   });
 

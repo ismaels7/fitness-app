@@ -17,21 +17,21 @@ describe("TargetPage Component", () => {
     jest.clearAllMocks();
   });
 
-  it("displays loading state initially", () => {
-    act(() => {
+  it("displays loading state initially", async () => {
+    await act(() => {
         render(<TargetPage />)
     })
 
     waitFor(() => expect(screen.getByTestId("loading-state")).toBeInTheDocument())
 });
-
+ 
   it("renders target data correctly after loading", async () => {
     mockFetchTargets.mockResolvedValueOnce(mockTargetData);
-
+ 
     await act(async () => {
       render(<TargetPage />);
     });
-
+ 
     await waitFor(() => {
       expect(screen.getByText("Arms")).toBeInTheDocument();
       expect(screen.getByText("Legs")).toBeInTheDocument();
