@@ -5,6 +5,7 @@ import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, Grid, Heading } from "@chak
 import Head from "next/head";
 import React, { use, useEffect, useState } from "react";
 import { formatTitle, loadingState } from "@/app/utils/functions"
+import { ExerciseType } from "@/api/exercises/basic";
 
 
 export default function Target(props: { params: Promise<{ targetId: string }> }) {
@@ -12,7 +13,7 @@ export default function Target(props: { params: Promise<{ targetId: string }> })
     const targetId = params.targetId
     const [error, setError] = useState(false)
     const [isLoading, setIsLoading] = useState(true)
-    const [targetExercises, setTargetExercises] = useState<any>()
+    const [targetExercises, setTargetExercises] = useState<ExerciseType[]>()
 
     const getExercisesBytarget = async () => {
         try {
@@ -50,20 +51,20 @@ export default function Target(props: { params: Promise<{ targetId: string }> })
                         </BreadcrumbItem>
                         <BreadcrumbItem>
                             <BreadcrumbLink href='/exercises/focus-areas'>
-                                Focus Areas
+                                By Focus Areas
                             </BreadcrumbLink>
                         </BreadcrumbItem>
                         <BreadcrumbItem>
                             <BreadcrumbLink href='/exercises/focus-areas/targets'>
-                                Targets
+                                By Targets
                             </BreadcrumbLink>
                         </BreadcrumbItem>
                         <BreadcrumbItem isCurrentPage>
-                            <BreadcrumbLink>{formatTitle(targetId)}</BreadcrumbLink>
+                            <BreadcrumbLink>{formatTitle({title: targetId})}</BreadcrumbLink>
                         </BreadcrumbItem>
                     </Breadcrumb>
                     <div className="flex items-center justify-center">
-                    <Heading size={"2xl"}>{formatTitle(targetId)} Exercises</Heading>
+                    <Heading size={"2xl"}>{formatTitle({title: targetId})} Exercises</Heading>
                     </div>
                     <Grid p={10} alignContent={"center"} justifyContent={"center"}>
                         {isLoading && loadingState({ items: 4, grid: 12, colSpan: 12, width: "700px", height: "400px" })}
@@ -71,7 +72,7 @@ export default function Target(props: { params: Promise<{ targetId: string }> })
                             <div data-testid="error-state">
                                 <Heading>There was an error while fetching data, please check the logs</Heading>
                             </div>)}
-                        {targetExercises && targetExercises.map((exercise: any) => {
+                        {targetExercises && targetExercises.map((exercise: ExerciseType) => {
                             return <AdvancedCard key={exercise.name} exercise={exercise} />
                         })}
                     </Grid>

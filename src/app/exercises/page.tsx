@@ -1,5 +1,5 @@
 "use client";
-import { fetchExercises } from "@/api/exercises/basic";
+import { ExerciseType, fetchExercises } from "@/api/exercises/basic";
 import Head from "next/head";
 import React from "react";
 import { useEffect, useState } from "react";
@@ -8,7 +8,7 @@ import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, Button, Heading } from "@ch
 import { loadingState } from "../utils/functions";
 
 export default function ExercisesPage() {
-    const [displayData, setDisplayData] = useState<any[]>([])
+    const [displayData, setDisplayData] = useState<ExerciseType[]>([])
     const [error, setError] = useState(false)
     const [isLoading, setIsLoading] = useState(true)
     const [isRoundLoading, setIsRoundLoading] = useState(true)
@@ -16,7 +16,7 @@ export default function ExercisesPage() {
     const [showLoadMore, setShowLoadMore] = useState(true)
     const perPage = 12
 
-    function checkLoadMore(data: any[]) {
+    function checkLoadMore(data: ExerciseType[]) {
         if (data.length < perPage) {
             setShowLoadMore(false)
         }
@@ -67,13 +67,13 @@ export default function ExercisesPage() {
                     {displayData && displayData.length > 0 && (
                         <>
                             <div className="flex items-center justify-center">
-                                <Heading size={"2xl"}>Exercises</Heading>
+                                <Heading size={"2xl"}>ALL EXERCISES</Heading>
                             </div>
                             <div data-testid="exercises-list" className="grid grid-cols-1 gap-5 mx-8 my-20 md:grid-cols-2 lg:grid-cols-3">
                                 <>
                                     {displayData.map((e, i) => {
                                         return (
-                                            <div key={e + i} className="items-center w-full px-10">
+                                            <div key={`${e}-${i}`} className="items-center w-full px-10">
                                                 <ExerciseCard exercise={e} />
                                             </div>
 

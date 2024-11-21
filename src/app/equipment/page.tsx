@@ -9,7 +9,7 @@ import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, Heading } from "@chakra-ui/
 export default function EquipmentPage() {
 
     const [selectedItems, setSelectedItems] = useState<string[]>([]);
-    const [equipmentData, setEquipmentData] = useState<any[]>()
+    const [equipmentData, setEquipmentData] = useState<string[]>()
     const [error, setError] = useState(false)
     const [isLoading, setIsLoading] = useState(true)
 
@@ -67,7 +67,7 @@ export default function EquipmentPage() {
                         </BreadcrumbItem>
                     </Breadcrumb>
                     <div className="flex items-center align-center justify-center">
-                            <Heading size={"2xl"}>Equipment</Heading>
+                            <Heading size={"2xl"}>EQUIPMENT</Heading>
                     </div>
                     <div className="flex items-center align-center justify-center mt-6">
                             <Heading size={"lg"}>Manage the equipment you already own!</Heading>

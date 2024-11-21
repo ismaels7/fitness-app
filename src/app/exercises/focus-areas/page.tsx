@@ -8,7 +8,7 @@ import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, Heading, Text } from "@chak
 
 export default function FocusAreasPage() {
 
-    const [bodyPartsData, setBodyPartsData] = useState<any[]>()
+    const [bodyPartsData, setBodyPartsData] = useState<string[]>()
     const [error, setError] = useState(false)
     const [isLoading, setIsLoading] = useState(true)
 

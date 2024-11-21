@@ -1,5 +1,5 @@
 "use client"
-import { fetchExercise } from "@/api/exercises/basic";
+import { ExerciseType, fetchExercise } from "@/api/exercises/basic";
 import { Box, Flex, Heading, Text, Image, List, ListItem, Tabs, Grid, GridItem, TabList, Tab, TabPanels, TabPanel, OrderedList, Breadcrumb, BreadcrumbItem, BreadcrumbLink } from "@chakra-ui/react";
 import Head from "next/head";
 import React, { use, useEffect, useState } from "react";
@@ -10,7 +10,7 @@ export default function ExercisePage(props: { params: Promise<{ exerciseId: stri
   const { exerciseId } = params
   const [error, setError] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
-  const [exerciseData, setExerciseData] = useState<any>()
+  const [exerciseData, setExerciseData] = useState<ExerciseType>()
 
   const getExercise = async () => {
     try {
@@ -47,7 +47,7 @@ export default function ExercisePage(props: { params: Promise<{ exerciseId: stri
               </BreadcrumbLink>
             </BreadcrumbItem>
             {exerciseData && (<BreadcrumbItem isCurrentPage>
-              <BreadcrumbLink>{formatTitle(exerciseData.name)}</BreadcrumbLink>
+              <BreadcrumbLink>{formatTitle({title: exerciseData.name, toUpperCase: true})}</BreadcrumbLink>
             </BreadcrumbItem>)}
           </Breadcrumb>
           <Flex p={10} alignContent={"center"} justifyContent={"center"} >
@@ -61,7 +61,7 @@ export default function ExercisePage(props: { params: Promise<{ exerciseId: stri
             {exerciseData && (
               <Box className="w-[70em]  justify-center p-6">
                 <div className="flex items-center justify-center">
-                  <Heading data-testid="heading" size={"2xl"}>{formatTitle(exerciseData.name)}</Heading>
+                  <Heading data-testid="heading" size={"2xl"}>{formatTitle({title: exerciseData.name, toUpperCase: true})}</Heading>
                 </div>
                 <Flex direction={{ base: 'column', md: 'row' }} align={"start"} justify={"space-between"} p={8}>
                   <Box flex={1}>
@@ -89,25 +89,25 @@ export default function ExercisePage(props: { params: Promise<{ exerciseId: stri
                           <Grid gap={3}>
                             <GridItem>
                               <Heading size={"lg"} alignContent={"center"} justifyContent={"center"}>Area</Heading>
-                              <Text fontSize={"xl"}>{formatTitle(exerciseData.bodyPart)}</Text>
+                              <Text fontSize={"xl"}>{formatTitle({title: exerciseData.bodyPart})}</Text>
                             </GridItem>
                             <GridItem>
                               <Heading size={"lg"} alignContent={"center"} justifyContent={"center"}>Target</Heading>
-                              <Text fontSize={"xl"}>{formatTitle(exerciseData.target)}</Text>
+                              <Text fontSize={"xl"}>{formatTitle({title: exerciseData.target})}</Text>
                             </GridItem>
                             <GridItem>
                               <Heading size={"lg"} alignContent={"center"} justifyContent={"center"}>Secondary muscles</Heading>
                               <List>
                                 {exerciseData.secondaryMuscles.map((muscle: string, index: number) => {
                                   return (
-                                    <ListItem fontSize={"xl"} key={index}>{formatTitle(muscle)}</ListItem>
+                                    <ListItem fontSize={"xl"} key={index}>{formatTitle({title: muscle})}</ListItem>
                                   )
                                 })}
                               </List>
                             </GridItem>
                             <GridItem>
                               <Heading size={"lg"} alignContent={"center"} justifyContent={"center"}>Equipment</Heading>
-                              <Text fontSize={"xl"}>{formatTitle(exerciseData.equipment)}</Text>
+                              <Text fontSize={"xl"}>{formatTitle({title: exerciseData.equipment})}</Text>
                             </GridItem>
                           </Grid>
                         </TabPanel>

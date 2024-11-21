@@ -1,10 +1,11 @@
-import { Card, CardBody, CardFooter, Button, Image, Text, Box, HStack, Badge, Heading, Stack } from "@chakra-ui/react"
+import { Card, CardBody, CardFooter, Button, Image, HStack, Badge, Heading, Stack } from "@chakra-ui/react"
 import { useRouter } from "next/navigation"
 import React from "react"
 import { formatTitle } from "@/app/utils/functions"
+import { ExerciseType } from "@/api/exercises/basic"
 
 interface ExerciseCardProps {
-  exercise: any
+  exercise: ExerciseType
 }
 export const ExerciseCard = ({ exercise }: ExerciseCardProps) => {
   const router = useRouter()
@@ -16,9 +17,10 @@ export const ExerciseCard = ({ exercise }: ExerciseCardProps) => {
         direction={{ base: 'column', sm: 'row' }}
         overflow='hidden'
         variant='outline'
+        className="customTile"
       >
         <Image
-          objectFit='cover'
+          objectFit="cover"
           maxW={{ base: '100%', sm: '200px' }}
           src={exercise.gifUrl}
           alt={exercise.name}
@@ -26,7 +28,7 @@ export const ExerciseCard = ({ exercise }: ExerciseCardProps) => {
 
         <Stack>
           <CardBody>
-            <Heading size='lg'>{formatTitle(exercise.name)}</Heading>
+            <Heading size='md'>{formatTitle({title: exercise.name, toUpperCase: true})}</Heading>
 
             <HStack py="2" mt="4">
             <Badge colorScheme={"cyan"}>{exercise.bodyPart}</Badge>

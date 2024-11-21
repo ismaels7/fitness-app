@@ -2,22 +2,14 @@
 import { Box, Flex, Heading, Text, Image, List, ListItem, Tabs, Grid, GridItem, TabList, Tab, TabPanels, TabPanel, OrderedList } from "@chakra-ui/react";
 import React from "react";
 import { formatTitle } from "@/app/utils/functions";
+import { ExerciseType } from "@/api/exercises/basic";
 interface AdvancedCardProps {
-    exercise: {
-        name: string,
-        url: string,
-        bodyPart: string,
-        target: string,
-        equipment: string,
-        gifUrl: string,
-        instructions: string[],
-        secondaryMuscles: string[]
-    }
+    exercise: ExerciseType
 }
-export const AdvancedCard = ({exercise}:AdvancedCardProps ) => {
+export const AdvancedCard = ({exercise}: AdvancedCardProps ) => {
   
     return <Box data-testid="advanced-card" className="w-[70em]  justify-center p-6">
-    <Heading size={"xl"}>{formatTitle(exercise.name)}</Heading>
+    <Heading size={"xl"}>{formatTitle({title: exercise.name, toUpperCase: true})}</Heading>
     <Flex direction={{ base: 'column', md: 'row' }} align={"start"} justify={"space-between"} p={8}>
       <Box flex={1}>
         <Image src={exercise.gifUrl} alt={exercise.name} borderRadius={"md"} objectFit={"cover"} w={"100%"} h={{ base: "300px", md: "500px" }} />
@@ -45,25 +37,25 @@ export const AdvancedCard = ({exercise}:AdvancedCardProps ) => {
             <Grid gap={3}>
               <GridItem>
                 <Heading size={"lg"} alignContent={"center"} justifyContent={"center"}>Area</Heading>
-                <Text fontSize={"xl"}>{formatTitle(exercise.bodyPart)}</Text>
+                <Text fontSize={"xl"}>{formatTitle({title: exercise.bodyPart})}</Text>
               </GridItem>
               <GridItem>
                 <Heading size={"lg"} alignContent={"center"} justifyContent={"center"}>Target</Heading>
-                <Text fontSize={"xl"}>{formatTitle(exercise.target)}</Text>
+                <Text fontSize={"xl"}>{formatTitle({title: exercise.target})}</Text>
               </GridItem>
               <GridItem>
                 <Heading size={"lg"} alignContent={"center"} justifyContent={"center"}>Secondary muscles</Heading>
                 <List>
                   {exercise.secondaryMuscles.map((muscle: string, index: number) => {
                     return (
-                      <ListItem fontSize={"xl"} key={`${muscle}-${index}`}>{formatTitle(muscle)}</ListItem>
+                      <ListItem fontSize={"xl"} key={`${muscle}-${index}`}>{formatTitle({title: muscle})}</ListItem>
                     )
                   })}
                 </List>
               </GridItem>
               <GridItem>
                 <Heading size={"lg"} alignContent={"center"} justifyContent={"center"}>Equipment</Heading>
-                <Text fontSize={"xl"}>{formatTitle(exercise.equipment)}</Text>
+                <Text fontSize={"xl"}>{formatTitle({title: exercise.equipment})}</Text>
               </GridItem>
             </Grid>
             </TabPanel>

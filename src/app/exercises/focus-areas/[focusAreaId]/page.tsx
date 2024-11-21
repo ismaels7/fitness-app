@@ -5,6 +5,7 @@ import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, Grid, Heading } from "@chak
 import Head from "next/head";
 import React, { use, useEffect, useState } from "react";
 import { formatTitle, loadingState } from "@/app/utils/functions";
+import { ExerciseType } from "@/api/exercises/basic";
 
 
 export default function ExercisesByAreaPage(props: { params: Promise<{ focusAreaId: string }> }) {
@@ -12,7 +13,7 @@ export default function ExercisesByAreaPage(props: { params: Promise<{ focusArea
   const focusAreaId = params.focusAreaId
   const [error, setError] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
-  const [exerciseData, setExerciseData] = useState<any>()
+  const [exerciseData, setExerciseData] = useState<ExerciseType[]>()
 
   const getExercise = async () => {
     try {
@@ -55,11 +56,11 @@ export default function ExercisesByAreaPage(props: { params: Promise<{ focusArea
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbItem isCurrentPage>
-              <BreadcrumbLink>{formatTitle(focusAreaId)}</BreadcrumbLink>
+              <BreadcrumbLink>{formatTitle({title: focusAreaId})}</BreadcrumbLink>
             </BreadcrumbItem>
           </Breadcrumb>
           <div className="flex items-center justify-center">
-            <Heading size={"2xl"}>{formatTitle(focusAreaId)} Exercises</Heading>
+            <Heading size={"2xl"}>{formatTitle({title:focusAreaId})} Exercises</Heading>
           </div>
           <Grid p={10} alignContent={"center"} justifyContent={"center"}>
             {isLoading && loadingState({ items: 4, grid: 12, colSpan: 12, width: "700px", height: "500px" })}
@@ -67,7 +68,7 @@ export default function ExercisesByAreaPage(props: { params: Promise<{ focusArea
               <div data-testid="error-state">
                 <Heading>There was an error while fetching data, please check the logs</Heading>
               </div>)}
-            {exerciseData && exerciseData.map((exercise: any, i: number) => {
+            {exerciseData && exerciseData.map((exercise: ExerciseType, i: number) => {
               return <AdvancedCard key={`${exercise.name}-${i}`} exercise={exercise} />
             })}
           </Grid>

@@ -1,7 +1,6 @@
 "use client";
 import Head from "next/head";
 import React, { useEffect, useState } from "react";
-import { fetchTargets } from "@/api/exercises/target";
 import { BasicCard } from "@/app/custom-components/BasicCard/BasicCard";
 import { loadingState } from "@/app/utils/functions"
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, Heading, Text } from "@chakra-ui/react";
@@ -9,7 +8,7 @@ import { fetchEquipments } from "@/api/exercises/equipment";
 
 export default function EquipmentExercisesPage() {
 
-    const [equipmentData, setEquipmentData] = useState<any[]>()
+    const [equipmentData, setEquipmentData] = useState<string[]>()
     const [error, setError] = useState(false)
     const [isLoading, setIsLoading] = useState(true)
 
@@ -48,11 +47,11 @@ export default function EquipmentExercisesPage() {
                             </BreadcrumbLink>
                         </BreadcrumbItem>
                         <BreadcrumbItem isCurrentPage>
-                           <Text>Equipment</Text>
+                           <Text>By Equipment</Text>
                         </BreadcrumbItem>
                     </Breadcrumb>
                     <div className="flex items-center align-center justify-center">
-                            <Heading size={"2xl"}>Equipment</Heading>
+                            <Heading size={"2xl"}>EXERCISES BY EQUIPMENT</Heading>
                     </div>
                     <div className="flex items-center align-center justify-center mt-6">
                             <Heading size={"lg"}>Browse exercises based on your available equipment</Heading>
