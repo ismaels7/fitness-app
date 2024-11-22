@@ -1,8 +1,12 @@
 import { GridItem, Skeleton, Stack } from "@chakra-ui/react"
 import React from "react"
-
-export const formatTitle = (title: string) => {
-    return decodeURI(title.charAt(0).toUpperCase() + title.slice(1))
+interface formatTitleProps {
+    title: string,
+    toUpperCase?: boolean
+}
+export const formatTitle = ({title, toUpperCase = false}: formatTitleProps) => {
+    const format = decodeURI(title.charAt(0).toUpperCase() + title.slice(1))
+    return toUpperCase ? format.toUpperCase() : format
 }
 
 export interface LoadingStateProps {

@@ -1,21 +1,21 @@
 "use client";
 import Head from "next/head";
 import React, { useEffect, useState } from "react";
-import { fetchBodyParts } from "@/api/exercises/body-parts";
 import { BasicCard } from "@/app/custom-components/BasicCard/BasicCard";
 import { loadingState } from "@/app/utils/functions"
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, Heading, Text } from "@chakra-ui/react";
+import { fetchEquipments } from "@/api/exercises/equipment";
 
-export default function FocusAreasPage() {
+export default function EquipmentExercisesPage() {
 
-    const [bodyPartsData, setBodyPartsData] = useState<string[]>()
+    const [equipmentData, setEquipmentData] = useState<string[]>()
     const [error, setError] = useState(false)
     const [isLoading, setIsLoading] = useState(true)
 
-    const getBodyParts = async () => {
+    const getEquipment = async () => {
         try {
-            const data = await fetchBodyParts()
-            setBodyPartsData(data)
+            const data = await fetchEquipments()
+            setEquipmentData(data)
         } catch (e) {
             setError(true)
         } finally {
@@ -23,18 +23,18 @@ export default function FocusAreasPage() {
         }
     }
 
-    useEffect(() => {
-        getBodyParts()
-    }, [])
 
+    useEffect(() => {
+        getEquipment()
+    }, [])
 
     return (
         <>
             <Head>
-                <title>Body Parts</title>
+                <title>Equipment</title>
             </Head>
             <div className="pb-10">
-            <div className="items-center sm:items-start min-h-screen p-5">
+                <div className="items-center sm:items-start min-h-screen p-5">
                 <Breadcrumb data-testid="breadcrumb">
                         <BreadcrumbItem>
                             <BreadcrumbLink href='/'>
@@ -47,28 +47,28 @@ export default function FocusAreasPage() {
                             </BreadcrumbLink>
                         </BreadcrumbItem>
                         <BreadcrumbItem isCurrentPage>
-                           <Text>Focus Areas</Text>
+                           <Text>By Equipment</Text>
                         </BreadcrumbItem>
                     </Breadcrumb>
                     <div className="flex items-center align-center justify-center">
-                            <Heading size={"2xl"}>Focus Areas</Heading>
+                            <Heading size={"2xl"}>EXERCISES BY EQUIPMENT</Heading>
                     </div>
                     <div className="flex items-center align-center justify-center mt-6">
-                            <Heading size={"lg"}>Focus on the muscles that matter most of your progress!</Heading>
+                            <Heading size={"lg"}>Browse exercises based on your available equipment</Heading>
                     </div>
                 {error && (
               <div data-testid="error-state">
                 <Heading>There was an error while fetching data, please check the logs</Heading>
               </div>)}
-                    <div className="p-10 ml-5">
-                        {isLoading && loadingState({items: 10, grid: 5})}
-                    </div>
-                    <div className="grid grid-cols-1 gap-5 mx-8 my-20 md:grid-cols-2 lg:grid-cols-5">
-                        {bodyPartsData && bodyPartsData.length > 0 && (
+                        <div className="ml-20 pt-10 pr-20">
+                        {isLoading && loadingState({items: 12, grid: 4})}
+                        </div>
+                    <div className="grid grid-cols-1 gap-5 mx-8 my-20 md:grid-cols-2 lg:grid-cols-4 pl-6">
+                        {equipmentData && equipmentData.length > 0 && (
                             <>
-                                {bodyPartsData.map((item: string) => {
+                                {equipmentData.map((item: string) => {
                                     return (
-                                        <BasicCard key={item} belongsTo="focus-areas" item={item}/>
+                                        <BasicCard key={item} belongsTo="equipment" item={item} />
                                     )
                                 })}
                             </>

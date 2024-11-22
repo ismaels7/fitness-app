@@ -10,9 +10,22 @@ type FetchExerciseParams = {
     id: string
 }
 
-export const fetchExercises = async ({perPage, offset}: FetchExercisesParams) : Promise<any> => {
+export type ExerciseType = {
+    id: string,
+    name: string,
+    bodyPart: string,
+    target: string,
+    equipment: string,
+    gifUrl: string,
+    secondaryMuscles: string[],
+    instructions: string[]
+
+
+}
+
+export const fetchExercises = async ({perPage, offset}: FetchExercisesParams) : Promise<ExerciseType[]> => {
     try {
-        const response: AxiosResponse<any> = await exerciseAPI.get('/exercises', {
+        const response: AxiosResponse<ExerciseType[]> = await exerciseAPI.get('/exercises', {
             params: {
                 limit: perPage,
                 offset: offset
@@ -25,9 +38,9 @@ export const fetchExercises = async ({perPage, offset}: FetchExercisesParams) : 
     }
 }
 
-export const fetchExercise =  async({id}:FetchExerciseParams): Promise<any> => {
+export const fetchExercise =  async({id}:FetchExerciseParams): Promise<ExerciseType> => {
     try {
-        const response: AxiosResponse<any> = await exerciseAPI.get(`/exercises/exercise/${id}`)
+        const response: AxiosResponse<ExerciseType> = await exerciseAPI.get(`/exercises/exercise/${id}`)
         return response.data
     } catch(error) {
         console.error(`Error while fetching /exercises/${id}`)

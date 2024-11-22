@@ -1,6 +1,7 @@
 import React, { act } from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import ExercisesPage from "@/app/exercises/page";
+import { ExerciseType } from "@/api/exercises/basic";
 
 type ExercisesListType = {
     bodyPart: string,
@@ -47,7 +48,7 @@ jest.mock("@/app/utils/functions", () => ({
 }));
 
 jest.mock("@/app/custom-components/ExerciseCard/ExerciseCard", () => ({
-    ExerciseCard: ({ exercise }: { exercise: any }) => (
+    ExerciseCard: ({ exercise }: { exercise: ExerciseType }) => (
         <div data-testid="exercise-card">{exercise.name}</div>
     ),
 }));
@@ -99,7 +100,7 @@ describe("ExercisesPage Component", () => {
     });
 
     it("hides the 'Load more' button when there is no more data to load", async () => {
-        const mockExercises: any[] = []; 
+        const mockExercises: ExerciseType[] = []; 
         mockFetchExercises.mockResolvedValueOnce(mockExercises)
         act(() => {
             render(<ExercisesPage />)

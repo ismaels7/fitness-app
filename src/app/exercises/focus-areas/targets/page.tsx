@@ -8,7 +8,7 @@ import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, Heading, Text } from "@chak
 
 export default function TargetPage() {
 
-    const [targetsData, setTargetsData] = useState<any[]>()
+    const [targetsData, setTargetsData] = useState<string[]>()
     const [error, setError] = useState(false)
     const [isLoading, setIsLoading] = useState(true)
 

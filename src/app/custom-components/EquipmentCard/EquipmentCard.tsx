@@ -3,7 +3,7 @@ import { Box, Checkbox, } from "@chakra-ui/react"
 import React from "react"
 
 interface EquipmentCardProps {
-  exercise: any,
+  exercise: string,
   checked: boolean,
   onChange: (exercise:string) => void
 }
@@ -11,8 +11,8 @@ export const EquipmentCard = ({ exercise, checked, onChange }: EquipmentCardProp
 
   return (
     <Box className="customTile" borderRadius={"lg"} borderWidth={"1px"} h="100px" justifyItems={"center"} alignContent={"center"} p={8} cursor={"pointer"} boxShadow={"md"} >
-      <Checkbox isChecked={checked} onChange={()=> onChange(exercise)} size='lg' colorScheme='orange'>
-        {formatTitle(exercise)}
+      <Checkbox isChecked={checked} onChange={()=> onChange(exercise)} size='lg' colorScheme='cyan'>
+        {formatTitle({title: exercise, toUpperCase: true})}
       </Checkbox>
     </Box>
 

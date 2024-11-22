@@ -9,6 +9,7 @@ import { useDisclosure } from '@chakra-ui/react'
 import { fetchEquipments } from "@/api/exercises/equipment"
 import React from "react"
 import { formatTitle } from "@/app/utils/functions"
+import { ExerciseType } from "@/api/exercises/basic"
 
 interface CategoryBannerProps {
     pathname: string,
@@ -17,9 +18,9 @@ export const CategoryBanner = ({ pathname }: CategoryBannerProps) => {
 
     const [error, setError] = useState(false)
     const [isLoading, setIsLoading] = useState(true)
-    const [areasData, setAreasData] = useState<any[]>([])
-    const [targetsData, setTargetsData] = useState<any[]>([])
-    const [equipmentsData, setEquipmentsData] = useState<any[]>([])
+    const [areasData, setAreasData] = useState<string[]>([])
+    const [targetsData, setTargetsData] = useState<string[]>([])
+    const [equipmentsData, setEquipmentsData] = useState<string[]>([])
 
     useEffect(() => {
         getBodyParts()
@@ -71,7 +72,7 @@ export const CategoryBanner = ({ pathname }: CategoryBannerProps) => {
         element,
     }: {
         children: React.ReactNode;
-        element: any
+        element: {name: string, url: string}
     }) {
         const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -101,7 +102,7 @@ export const CategoryBanner = ({ pathname }: CategoryBannerProps) => {
         );
     }
 
-    const DropdownItem = ({ data, slug, children }: { data: any[], slug: string, children: any }) => {
+    const DropdownItem = ({ data, slug, children }: { data: string[], slug: string, children: React.ReactNode }) => {
         return (
             <GridItem
             >
@@ -113,7 +114,7 @@ export const CategoryBanner = ({ pathname }: CategoryBannerProps) => {
                             py={1}
                             borderRadius="md"
                             _hover={{ bg: 'cyan.100', color: 'cyan.800' }}>
-                            <Link href={`/exercises/${slug}/${area}`} >{formatTitle(area)}</Link>
+                            <Link href={`/exercises/${slug}/${area}`} >{formatTitle({title: area})}</Link>
                         </GridItem>
                     )
                 })}
@@ -142,7 +143,7 @@ export const CategoryBanner = ({ pathname }: CategoryBannerProps) => {
                         </Heading>
                     </DropdownItem>
                     <DropdownItem slug="equipment" data={equipmentsData}><Heading px={4} fontSize={"md"}>
-                        <Link href={"/equipment"}>Exercises by Equipments</Link>
+                        <Link href={"/exercises/equipment"}>Exercises by Equipments</Link>
                     </Heading>
                     </DropdownItem>
                 </Grid>

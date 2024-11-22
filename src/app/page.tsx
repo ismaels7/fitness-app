@@ -6,7 +6,7 @@ import { Banner } from "./custom-components/Banner/Banner";
 import React, { useEffect, useState } from "react";
 import { CategoryTile } from "./custom-components/CategoryTile/CategoryTile";
 import { TrendingList } from "./custom-components/TrendingList/TrendingList";
-import { fetchExercises } from "@/api/exercises/basic";
+import { ExerciseType, fetchExercises } from "@/api/exercises/basic";
 import { fetchEquipments } from "@/api/exercises/equipment";
 import { loadingState } from "./utils/functions";
 
@@ -41,8 +41,8 @@ export default function Home() {
   const [errorEquipment, setErrorEquipment] = useState(false)
   const [isLoadingExercises, setIsLoadingExercises] = useState(true)
   const [isLoadingEquipment, setIsLoadingEquipment] = useState(true)
-  const [trendingExericses, setTrendingExercises] = useState<any>()
-  const [trendingEquipment, setTrendingEquipment] = useState<any>()
+  const [trendingExericses, setTrendingExercises] = useState<ExerciseType[]>()
+  const [trendingEquipment, setTrendingEquipment] = useState<string[]>()
 
   const getTrendingExercises = async () => {
     try {
