@@ -20,6 +20,7 @@ export default function Target(props: { params: Promise<{ targetId: string }> })
             const data = await fetchExercisesByTarget({ id: targetId })
             setTargetExercises(data)
         } catch (e) {
+            console.error(e)
             setError(true)
         } finally {
             setIsLoading(false)

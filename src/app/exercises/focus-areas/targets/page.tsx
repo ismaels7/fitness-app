@@ -17,6 +17,7 @@ export default function TargetPage() {
             const data = await fetchTargets()
             setTargetsData(data)
         } catch (e) {
+            console.error(e)
             setError(true)
         } finally {
             setIsLoading(false)

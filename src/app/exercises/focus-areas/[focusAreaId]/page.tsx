@@ -20,6 +20,7 @@ export default function ExercisesByAreaPage(props: { params: Promise<{ focusArea
       const data = await fetchExercisesByBodyPart({ id: focusAreaId })
       setExerciseData(data)
     } catch (e) {
+      console.error(e)
       setError(true)
     } finally {
       setIsLoading(false)

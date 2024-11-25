@@ -8,16 +8,19 @@ import { useEffect, useState } from "react"
 import { useDisclosure } from '@chakra-ui/react'
 import { fetchEquipments } from "@/api/exercises/equipment"
 import React from "react"
-import { formatTitle } from "@/app/utils/functions"
-import { ExerciseType } from "@/api/exercises/basic"
+import { formatTitle, loadingState } from "@/app/utils/functions"
 
 interface CategoryBannerProps {
     pathname: string,
 }
 export const CategoryBanner = ({ pathname }: CategoryBannerProps) => {
 
-    const [error, setError] = useState(false)
-    const [isLoading, setIsLoading] = useState(true)
+    const [errorAreas, setErrorAreas] = useState(false)
+    const [isLoadingAreas, setIsLoadingAreas] = useState(true)
+    const [errorTargets, setErrorTargets] = useState(false)
+    const [isLoadingTargets, setIsLoadingTargets] = useState(true)
+    const [errorEquipment, setErroEquipment] = useState(false)
+    const [isLoadingEquipment, setIsLoadingEquipment] = useState(true)
     const [areasData, setAreasData] = useState<string[]>([])
     const [targetsData, setTargetsData] = useState<string[]>([])
     const [equipmentsData, setEquipmentsData] = useState<string[]>([])
@@ -30,40 +33,40 @@ export const CategoryBanner = ({ pathname }: CategoryBannerProps) => {
 
     const getBodyParts = async () => {
         try {
-            setIsLoading(true)
+            setIsLoadingAreas(true)
             const data = await fetchBodyParts()
             setAreasData(data)
         } catch (e) {
-            setError(true)
+            setErrorAreas(true)
             console.error(e)
         } finally {
-            setIsLoading(false)
+            setIsLoadingAreas(false)
         }
     }
 
     const getTargets = async () => {
         try {
-            setIsLoading(true)
+            setIsLoadingTargets(true)
             const data = await fetchTargets()
             setTargetsData(data)
         } catch (e) {
-            setError(true)
+            setErrorTargets(true)
             console.error(e)
         } finally {
-            setIsLoading(false)
+            setIsLoadingTargets(false)
         }
     }
 
     const getEquipments = async () => {
         try {
-            setIsLoading(true)
+            setIsLoadingEquipment(true)
             const data = await fetchEquipments()
             setEquipmentsData(data)
         } catch (e) {
-            setError(true)
+            setErroEquipment(true)
             console.error(e)
         } finally {
-            setIsLoading(false)
+            setIsLoadingEquipment(false)
         }
     }
 
@@ -102,7 +105,16 @@ export const CategoryBanner = ({ pathname }: CategoryBannerProps) => {
         );
     }
 
-    const DropdownItem = ({ data, slug, children }: { data: string[], slug: string, children: React.ReactNode }) => {
+    const DropdownItem = ({ data, isLoading, error, slug, children }: { data: string[], isLoading: boolean, error: boolean, slug: string, children: React.ReactNode }) => {
+
+       if (isLoading) {
+        return <>{loadingState({items: 1, grid: 1, colSpan:1, width:"100px", height: "50px"})}</>
+       }
+
+       if (!error) {
+        return  <Text>There was an error while fetching data, please check the logs</Text>
+       }
+
         return (
             <GridItem
             >
@@ -119,30 +131,30 @@ export const CategoryBanner = ({ pathname }: CategoryBannerProps) => {
                     )
                 })}
             </GridItem>
-        );
+        )
     }
 
 
 
 
     return (
-        <Box className="gradient-background grid sm:grid-cols-4 lg:grid-cols-12 lgz-100" w='100%' gap={5} opacity={1} backgroundPosition={"center"} h={"100px"} alignItems={"center"} textAlign={"left"} color={"white"} paddingTop={"10px"} paddingInline={"30px"}>
+         <Box className="gradient-background grid sm:grid-cols-4 lg:grid-cols-12 lgz-100" w='100%' gap={5} opacity={1} backgroundPosition={"center"} h={"100px"} alignItems={"center"} textAlign={"left"} color={"white"} paddingTop={"10px"} paddingInline={"30px"}>
             <GridItem colSpan={{ base: 4, md: 2 }}>
                 <Link href={"/"}><Heading fontSize={{ base: "4xl", md: "5xl" }} mb={4}>FIT-Shape.</Heading></Link>
             </GridItem>
             <MenuWithDropdown element={{ name: "Exercises", url: "/exercises" }}>
                 <Grid templateColumns="max-content max-content max-content" gap={4} p={4}>
-                    <DropdownItem slug="focus-areas" data={areasData}>
+                    <DropdownItem slug="focus-areas" isLoading={isLoadingAreas} error={errorAreas} data={areasData}>
                         <Heading px={4} fontSize={"md"}>
                             <Link href={"/exercises/focus-areas"}>Exercises by Area</Link>
                         </Heading>
                     </DropdownItem>
-                    <DropdownItem slug="focus-areas/targets" data={targetsData}>
+                    <DropdownItem slug="focus-areas/targets" isLoading={isLoadingTargets} error={errorTargets} data={targetsData}>
                         <Heading px={4} fontSize={"md"}>
                             <Link href={"/exercises/focus-areas/targets"}>Exercises by Targets</Link>
                         </Heading>
                     </DropdownItem>
-                    <DropdownItem slug="equipment" data={equipmentsData}><Heading px={4} fontSize={"md"}>
+                    <DropdownItem slug="equipment" isLoading={isLoadingEquipment} error={errorEquipment} data={equipmentsData}><Heading px={4} fontSize={"md"}>
                         <Link href={"/exercises/equipment"}>Exercises by Equipments</Link>
                     </Heading>
                     </DropdownItem>

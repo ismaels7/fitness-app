@@ -23,6 +23,7 @@ export default function ExerciseByEquipmentPage(props: {
             const data = await fetchExerciseByEquipment({ id: equipmentId })
             setExerciseData(data)
         } catch (e) {
+            console.error(e)
             setError(true)
         } finally {
             setIsLoading(false)

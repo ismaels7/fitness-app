@@ -24,12 +24,15 @@ export default function ExercisesPage() {
     }
     const getExercises = async () => {
         try {
-            offset > 0 && setIsRoundLoading(true)
+           if (offset > 0){
+            setIsRoundLoading(true)
+           }
             const data = await fetchExercises({ perPage: perPage, offset: offset })
             checkLoadMore(data)
             setOffset(perPage)
 
         } catch (e) {
+            console.error(e)
             setError(true)
         } finally {
             setIsLoading(false)

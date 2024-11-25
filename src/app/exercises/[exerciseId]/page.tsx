@@ -17,6 +17,7 @@ export default function ExercisePage(props: { params: Promise<{ exerciseId: stri
       const data = await fetchExercise({ id: exerciseId as string })
       setExerciseData(data)
     } catch (e) {
+      console.error(e)
       setError(true)
     } finally {
       setIsLoading(false)

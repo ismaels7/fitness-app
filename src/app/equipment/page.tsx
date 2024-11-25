@@ -18,6 +18,7 @@ export default function EquipmentPage() {
             const data = await fetchEquipments()
             setEquipmentData(data)
         } catch (e) {
+            console.error(e)
             setError(true)
         } finally {
             setIsLoading(false)
@@ -34,13 +35,14 @@ export default function EquipmentPage() {
 
 
     useEffect(()=> {
-        selectedItems.length > 0 && localStorage.setItem("selectedEquipment", JSON.stringify(selectedItems))
+        if (selectedItems.length > 0) {
+            localStorage.setItem("selectedEquipment", JSON.stringify(selectedItems))
+        }
     },[selectedItems])
 
 
     const handleCheckboxChange = (name:string) =>{
         if (selectedItems.includes(name)) {
-            const x = selectedItems.filter((curr) => curr !== name)
             setSelectedItems((prev)=> prev.filter((item)=> item !==name))
         } else {
             const x = [...selectedItems, name]
