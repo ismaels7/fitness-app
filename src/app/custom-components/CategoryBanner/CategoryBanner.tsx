@@ -111,7 +111,7 @@ export const CategoryBanner = ({ pathname }: CategoryBannerProps) => {
         return <>{loadingState({items: 1, grid: 1, colSpan:1, width:"100px", height: "50px"})}</>
        }
 
-       if (!error) {
+       if (error) {
         return  <Text>There was an error while fetching data, please check the logs</Text>
        }
 
