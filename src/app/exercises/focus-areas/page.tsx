@@ -17,6 +17,7 @@ export default function FocusAreasPage() {
             const data = await fetchBodyParts()
             setBodyPartsData(data)
         } catch (e) {
+            console.error(e)
             setError(true)
         } finally {
             setIsLoading(false)

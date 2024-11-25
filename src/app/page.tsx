@@ -31,9 +31,6 @@ const categories = [
   }
 ]
 
-const items = [{ id: "1", name: "Abs" }, { id: "2", name: "Curl biceps" }, { id: "3", name: "Bench press" },]
-const equip = [{ id: "1", name: "Abs" }, { id: "2", name: "Curl biceps" }, { id: "3", name: "Bench press" },]
-
 
 export default function Home() {
 
@@ -50,6 +47,7 @@ export default function Home() {
       const data = await fetchExercises({ perPage: 3, offset: (Math.floor(Math.random() * 20) * 1) })
       setTrendingExercises(data)
     } catch (e) {
+      console.error(e)
       setErrorExercises(true)
     } finally {
       setIsLoadingExercises(false)
@@ -63,6 +61,7 @@ export default function Home() {
       const randomItems = data.sort(() => 0 - Math.random()).slice(0, 3)
       setTrendingEquipment(randomItems)
     } catch (e) {
+      console.error(e)
       setErrorEquipment(true)
     } finally {
       setIsLoadingEquipment(false)

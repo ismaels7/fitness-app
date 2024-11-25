@@ -24,7 +24,7 @@ export const TrendingList = ({ list, title }: TrendingListProps) => {
                             <Link key={typeof item === 'string' ? item : item.id} href={typeof item === 'string' ? `/exercises/equipment/${item}` : `exercises/${item.id}`}>
                                 <div className="flex items-center">
                                     <Icon fontSize={"20px"}><FaAngleRight /></Icon>
-                                    <Text>{formatTitle(typeof item === 'string' ? item : item.name)}</Text>
+                                    <Text>{formatTitle({title: typeof item === 'string' ? item : item.name})}</Text>
                                 </div>
                             </Link>
                         )

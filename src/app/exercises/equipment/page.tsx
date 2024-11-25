@@ -17,6 +17,7 @@ export default function EquipmentExercisesPage() {
             const data = await fetchEquipments()
             setEquipmentData(data)
         } catch (e) {
+            console.error(e)
             setError(true)
         } finally {
             setIsLoading(false)
