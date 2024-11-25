@@ -1,0 +1,47 @@
+/* @tailwind base; */
+@tailwind components;
+@tailwind utilities;
+
+
+:root {
+  --background:rgb(245, 226, 234);
+  --foreground: #171717;
+}
+
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: rgb(0, 0, 0);
+  }
+}
+.gradient-background {
+  background-image: linear-gradient(to right, #000000, #054859);
+}
+
+.skeleton {
+  background-color: #c0d6db;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.global-container {
+  margin: 0 auto;
+  background-color: #ffffff;
+}
+
+.content-container {
+  height: 100%;
+}
+
+.customTile:hover {
+  transform: translateY(-5px);
+  transition: all 0.3s;
+  box-shadow:
+    0 4px 8px #1cc1e21a,
+    0 12px 16px #08cec81a;
+}
