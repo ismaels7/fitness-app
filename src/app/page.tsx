@@ -1,14 +1,13 @@
 "use client";
 
-import { Box, Grid, GridItem, Heading } from "@chakra-ui/react";
-import Image from "next/image";
-import { Banner } from "./custom-components/Banner/Banner";
+import { Center, Divider, Grid, GridItem, Heading } from "@chakra-ui/react";
+import { Banner } from "@/app/custom-components/Banner/Banner";
 import React, { useEffect, useState } from "react";
-import { CategoryTile } from "./custom-components/CategoryTile/CategoryTile";
-import { TrendingList } from "./custom-components/TrendingList/TrendingList";
-import { ExerciseType, fetchExercises } from "@/api/exercises/basic";
-import { fetchEquipments } from "@/api/exercises/equipment";
-import { loadingState } from "./utils/functions";
+import { CategoryTile } from "@/app/custom-components/CategoryTile/CategoryTile";
+import { TrendingList } from "@/app/custom-components/TrendingList/TrendingList";
+import { ExerciseType, fetchExercises } from "@/config/api/exercises/basic";
+import { fetchEquipments } from "@/config/api/exercises/equipment";
+import { loadingState } from "@/config/utils/functions";
 
 const categories = [
   {
@@ -77,88 +76,43 @@ export default function Home() {
     <div data-testid="main" className="pb-10 min-h-screen">
       <main className="items-center sm:items-start">
         <Banner data-testid="banner-container" />
-        <div className="grid grid-cols-1 gap-5 mx-8 my-20 md:grid-cols-2 lg:grid-cols-3">
+        <Grid templateColumns={'repeat(3, 1fr)'} gap={4} p={4}>
           {categories.map((category) => {
             return (
               <CategoryTile key={category.id} title={category.title} summary={category.summary} url={category.url} />
             )
           })}
-        </div>
+        </Grid>
         <>
-          <Grid templateColumns="1fr 2px 1fr" gap="1" m={8} marginBottom={20}>
-            {isLoadingExercises && <div className="flex pl-7 items-center justfy-center">
-              {loadingState({ items: 3, grid: 3, colSpan: 3, height: "30px", width: "800px" })}
-            </div>}
+          <Grid templateColumns='repeat(12, 1fr)' marginBottom={20}>
+            <GridItem colSpan={5} p={4}>
+              {isLoadingExercises &&
+                loadingState({ items: 3, grid: 3, colSpan: 3, height: "30px", width: "100%" })
+              }
               {errorExercises && (
                 <div data-testid="error-exercises-state">
                   <Heading>There was an error while fetching data, please check the logs</Heading>
                 </div>
               )}
-            {!isLoadingExercises && !errorExercises &&  <TrendingList title="Trending Exercises" list={trendingExericses || []} />}
-            <GridItem>
-              <Box display={"flex"} justifyContent={"center"} alignItems={"center"} width={"1px"} bg={"gray.400"} height={"100%"} />
+            {!isLoadingExercises && !errorExercises && <TrendingList title="Trending Exercises" list={trendingExericses || []} />}
             </GridItem>
-            {isLoadingEquipment && <div className="flex pl-7 items-center justfy-center">
-              {loadingState({ items: 3, grid: 3, colSpan: 3, height: "30px", width: "800px" })}
-            </div>}
-            {errorEquipment && (
-              <div data-testid="error-equipment-state">
-                <Heading>There was an error while fetching data, please check the logs</Heading>
-              </div>
-            )}
+            <GridItem colSpan={2} >
+              <Center height='100%'>
+                <Divider orientation='vertical' />
+              </Center>
+            </GridItem>
+            <GridItem colSpan={5}  p={4}>
+              {isLoadingEquipment && loadingState({ items: 3, grid: 3, colSpan: 3, height: "30px", width: "100%" })}
+              {errorEquipment && (
+                <div data-testid="error-equipment-state">
+                  <Heading>There was an error while fetching data, please check the logs</Heading>
+                </div>
+              )}
             {!isLoadingEquipment && !errorEquipment && <TrendingList title="Trending Equipment" list={trendingEquipment || []} />}
+            </GridItem>
           </Grid>
         </>
-
-
       </main>
-      <footer className="flex gap-6 flex-wrap items-center justify-center mt-10">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://github.com/ismaels7"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Github
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://www.linkedin.com/in/ismaelsegoviano/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          LinkedIn
-        </a>
-      </footer>
     </div>
   );
 }

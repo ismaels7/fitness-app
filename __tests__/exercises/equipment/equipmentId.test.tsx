@@ -3,11 +3,19 @@ import { render, screen, waitFor } from "@testing-library/react";
 import ExerciseByEquipmentPage from "@/app/exercises/equipment/[equipmentId]/page";
 
 const mockFetchExerciseByEquipment = jest.fn()
-jest.mock("@/api/exercises/equipment", () => {
+jest.mock("@/config/api/exercises/equipment", () => {
     return {
         fetchExerciseByEquipment: () => mockFetchExerciseByEquipment()
     }
 });
+
+jest.mock("next/router", () => ({
+  useRouter: () => ({
+    query: {
+      equipmentId: "dumbell"
+    }
+  })
+}))
 
 type ExercisesListType = {
     bodyPart: string,
@@ -50,7 +58,7 @@ describe("ExerciseByAreaPage Component", () => {
   it("renders the loading state initially", async () => {
 
     await act( () => {
-      render(<ExerciseByEquipmentPage params={Promise.resolve({ equipmentId: "dumbbell"})} />);
+      render(<ExerciseByEquipmentPage params={{equipmentId: "dumbbell"}} />);
     });
 
     waitFor(()=> {
@@ -62,14 +70,14 @@ describe("ExerciseByAreaPage Component", () => {
     mockFetchExerciseByEquipment.mockResolvedValueOnce(mockExercisesList);
 
     await act(async () => {
-      render(<ExerciseByEquipmentPage params={Promise.resolve({ equipmentId: "dumbbell"})} />);
+      render(<ExerciseByEquipmentPage params={{equipmentId: "dumbbell"}} />);
     });
 
     await waitFor(() => {
         expect(screen.getAllByTestId("advanced-card")).toHaveLength(2);
         expect(screen.getByTestId("breadcrumb")).toBeInTheDocument();
-        expect(screen.queryByText("Jump")).toBeInTheDocument();
-        expect(screen.queryByText("Curl")).toBeInTheDocument();
+        expect(screen.queryByText("JUMP")).toBeInTheDocument();
+        expect(screen.queryByText("CURL")).toBeInTheDocument();
     });
 
   });
@@ -78,7 +86,7 @@ describe("ExerciseByAreaPage Component", () => {
     mockFetchExerciseByEquipment.mockRejectedValueOnce(new Error("Fetch error"));
 
     await act(async () => {
-      render(<ExerciseByEquipmentPage params={Promise.resolve({ equipmentId: "dumbbell"})} />);
+      render(<ExerciseByEquipmentPage params={{equipmentId: "dumbbell"}} />);
     });
 
     await waitFor(() => {
@@ -94,7 +102,7 @@ describe("ExerciseByAreaPage Component", () => {
     mockFetchExerciseByEquipment.mockResolvedValueOnce([]);
 
     await act(async () => {
-      render(<ExerciseByEquipmentPage params={Promise.resolve({ equipmentId: "dumbbell"})} />);
+      render(<ExerciseByEquipmentPage params={{equipmentId: "dumbbell"}} />);
     });
 
     await waitFor(() => {

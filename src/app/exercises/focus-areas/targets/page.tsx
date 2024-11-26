@@ -1,9 +1,9 @@
 "use client";
 import Head from "next/head";
 import React, { useEffect, useState } from "react";
-import { fetchTargets } from "@/api/exercises/target";
-import { BasicCard } from "@/app/custom-components/BasicCard/BasicCard";
-import { loadingState } from "@/app/utils/functions"
+import { fetchTargets } from "@//config/api/exercises/target";
+import { BasicCard } from "@//app/custom-components/BasicCard/BasicCard";
+import { loadingState } from "@//config/utils/functions"
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, Heading, Text } from "@chakra-ui/react";
 
 export default function TargetPage() {

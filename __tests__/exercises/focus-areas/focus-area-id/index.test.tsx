@@ -4,11 +4,19 @@ import ExercisesByAreaPage from "@/app/exercises/focus-areas/[focusAreaId]/page"
 
 const mockFetchExerciseByBodyPart = jest.fn();
 
-jest.mock("@/api/exercises/body-parts", () => {
+jest.mock("@/config/api/exercises/body-parts", () => {
   return {
     fetchExercisesByBodyPart: () => mockFetchExerciseByBodyPart()
   }
 })
+
+jest.mock("next/router", () => ({
+  useRouter: () => ({
+    query: {
+      focusAreaId: "chest"
+    }
+  })
+}))
 
 
 const mockExerciseData = [
@@ -23,7 +31,7 @@ describe("ExerciseByAreaPage Component", () => {
 
   it("renders the loading state initially", async () => {
     await act(async () => {
-      render(<ExercisesByAreaPage params={Promise.resolve({ focusAreaId: "chest" })} />);
+      render(<ExercisesByAreaPage params={{focusAreaId: "chest"}} />);
     });
 
     waitFor(() => {
@@ -36,13 +44,13 @@ describe("ExerciseByAreaPage Component", () => {
     mockFetchExerciseByBodyPart.mockResolvedValueOnce(mockExerciseData);
 
     await act(async () => {
-      render(<ExercisesByAreaPage params={Promise.resolve({ focusAreaId: "chest" })} />);
+      render(<ExercisesByAreaPage params={{focusAreaId: "chest"}} />);
     });
 
 
     await waitFor(() => {
-      expect(screen.getByText("Push Up")).toBeInTheDocument();
-      expect(screen.getByText("Squat")).toBeInTheDocument();
+      expect(screen.getByText("PUSH UP")).toBeInTheDocument();
+      expect(screen.getByText("SQUAT")).toBeInTheDocument();
     });
 
   });
@@ -51,7 +59,7 @@ describe("ExerciseByAreaPage Component", () => {
     mockFetchExerciseByBodyPart.mockRejectedValueOnce({ name: "error" });
 
     await act(async () => {
-      render(<ExercisesByAreaPage params={Promise.resolve({ focusAreaId: "chest" })} />);
+      render(<ExercisesByAreaPage params={{focusAreaId: "chest"}} />);
     });
 
 
@@ -66,7 +74,7 @@ describe("ExerciseByAreaPage Component", () => {
     mockFetchExerciseByBodyPart.mockResolvedValueOnce([]);
 
     await act(async () => {
-      render(<ExercisesByAreaPage params={Promise.resolve({ focusAreaId: "chest" })} />);
+      render(<ExercisesByAreaPage params={{focusAreaId: "chest"}} />);
     });
 
 

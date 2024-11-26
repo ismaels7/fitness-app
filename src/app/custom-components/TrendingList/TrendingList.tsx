@@ -1,4 +1,4 @@
-import { formatTitle } from "@/app/utils/functions"
+import { formatTitle } from "@//config/utils/functions"
 import { Icon, Box, GridItem, Heading, Text } from "@chakra-ui/react"
 import Link from "next/link"
 import React from "react"
@@ -15,7 +15,7 @@ type TrendingListProps = {
 }
 export const TrendingList = ({ list, title }: TrendingListProps) => {
     return (
-        <GridItem>
+        <>
             <Heading display={"flex"} justifyContent={"center"} alignItems={"center"} >{title}</Heading>
             <Box display={"flex"} justifyContent={"center"} alignItems={"center"} height={"100%"}>
                 <div>
@@ -32,6 +32,6 @@ export const TrendingList = ({ list, title }: TrendingListProps) => {
                 </div>
             </Box>
 
-        </GridItem>
+        </>
     )
 }

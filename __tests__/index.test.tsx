@@ -8,13 +8,13 @@ import { ChakraProvider } from "@chakra-ui/react";
 const mockFetchExercises = jest.fn();
 const mockFetchEquipments = jest.fn();
 
-jest.mock("@/api/exercises/basic", () => {
+jest.mock("@/config/api/exercises/basic", () => {
   return {
     fetchExercises: () => mockFetchExercises()
   }
 });
 
-jest.mock("@/api/exercises/equipment", () => {
+jest.mock("@/config/api/exercises/equipment", () => {
   return {
     fetchEquipments: () => mockFetchEquipments()
   }

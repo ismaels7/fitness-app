@@ -5,7 +5,7 @@ import TargetPage from "@/app/exercises/focus-areas/targets/page";
 
 const mockFetchTargets = jest.fn();
 
-jest.mock("@/api/exercises/target", () => ({
+jest.mock("@/config/api/exercises/target", () => ({
   fetchTargets: () => mockFetchTargets()
 }));
 

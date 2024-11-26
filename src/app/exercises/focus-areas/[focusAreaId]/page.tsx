@@ -1,23 +1,28 @@
 "use client"
-import { fetchExercisesByBodyPart } from "@/api/exercises/body-parts";
+import { fetchExercisesByBodyPart } from "@/config/api/exercises/body-parts";
 import { AdvancedCard } from "@/app/custom-components/AdvancedCard/AdvancedCard";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, Grid, Heading } from "@chakra-ui/react";
 import Head from "next/head";
-import React, { use, useEffect, useState } from "react";
-import { formatTitle, loadingState } from "@/app/utils/functions";
-import { ExerciseType } from "@/api/exercises/basic";
+import React, { useEffect, useState } from "react";
+import { formatTitle, loadingState } from "@/config/utils/functions";
+import { ExerciseType } from "@/config/api/exercises/basic";
 
+interface ExercisesByAreaPage {
+  params: {
+    focusAreaId: string
+  }
+}
 
-export default function ExercisesByAreaPage(props: { params: Promise<{ focusAreaId: string }> }) {
-  const params = use(props.params);
-  const focusAreaId = params.focusAreaId
+export default function ExercisesByAreaPage({ params }: ExercisesByAreaPage) {
+
+  const { focusAreaId } = params
   const [error, setError] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
   const [exerciseData, setExerciseData] = useState<ExerciseType[]>()
 
   const getExercise = async () => {
     try {
-      const data = await fetchExercisesByBodyPart({ id: focusAreaId })
+      const data = await fetchExercisesByBodyPart({ id: focusAreaId as string })
       setExerciseData(data)
     } catch (e) {
       console.error(e)
@@ -57,11 +62,11 @@ export default function ExercisesByAreaPage(props: { params: Promise<{ focusArea
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbItem isCurrentPage>
-              <BreadcrumbLink>{formatTitle({title: focusAreaId})}</BreadcrumbLink>
+              <BreadcrumbLink>{formatTitle({ title: focusAreaId as string })}</BreadcrumbLink>
             </BreadcrumbItem>
           </Breadcrumb>
           <div className="flex items-center justify-center">
-            <Heading size={"2xl"}>{formatTitle({title:focusAreaId})} Exercises</Heading>
+            <Heading size={"2xl"}>{formatTitle({ title: focusAreaId as string })} Exercises</Heading>
           </div>
           <Grid p={10} alignContent={"center"} justifyContent={"center"}>
             {isLoading && loadingState({ items: 4, grid: 12, colSpan: 12, width: "700px", height: "500px" })}

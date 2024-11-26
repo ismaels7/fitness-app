@@ -4,7 +4,7 @@ import EquipmentPage from "@/app/equipment/page";
 
 
 const mockFetchEquipments = jest.fn()
-jest.mock("@/api/exercises/equipment", () => {
+jest.mock("@/config/api/exercises/equipment", () => {
     return {
         fetchEquipments: () => mockFetchEquipments(),
     }

@@ -1,11 +1,11 @@
 "use client";
-import { ExerciseType, fetchExercises } from "@/api/exercises/basic";
+import { ExerciseType, fetchExercises } from "@/config/api/exercises/basic";
 import Head from "next/head";
 import React from "react";
 import { useEffect, useState } from "react";
 import { ExerciseCard } from "../custom-components/ExerciseCard/ExerciseCard";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, Button, Heading } from "@chakra-ui/react";
-import { loadingState } from "../utils/functions";
+import { loadingState } from "@//config/utils/functions";
 
 export default function ExercisesPage() {
     const [displayData, setDisplayData] = useState<ExerciseType[]>([])

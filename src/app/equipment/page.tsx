@@ -1,9 +1,9 @@
 "use client";
 import Head from "next/head";
 import React, { useEffect, useState } from "react";
-import { fetchEquipments } from "@/api/exercises/equipment";
-import { EquipmentCard } from "../custom-components/EquipmentCard/EquipmentCard"
-import { loadingState } from "../utils/functions";
+import { fetchEquipments } from "@//config/api/exercises/equipment";
+import { EquipmentCard } from "@//app/custom-components/EquipmentCard/EquipmentCard"
+import { loadingState } from "@//config/utils/functions";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, Heading } from "@chakra-ui/react";
 
 export default function EquipmentPage() {
