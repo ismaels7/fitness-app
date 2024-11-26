@@ -1,9 +1,9 @@
 "use client";
 import Head from "next/head";
 import React, { useEffect, useState } from "react";
-import { fetchBodyParts } from "@/api/exercises/body-parts";
-import { BasicCard } from "@/app/custom-components/BasicCard/BasicCard";
-import { loadingState } from "@/app/utils/functions"
+import { fetchBodyParts } from "@//config/api/exercises/body-parts";
+import { BasicCard } from "@//app/custom-components/BasicCard/BasicCard";
+import { loadingState } from "@//config/utils/functions"
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, Heading, Text } from "@chakra-ui/react";
 
 export default function FocusAreasPage() {

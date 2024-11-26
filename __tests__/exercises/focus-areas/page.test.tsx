@@ -3,7 +3,7 @@ import { render, screen, waitFor } from "@testing-library/react";
 import FocusAreasPage from "@/app/exercises/focus-areas/page";
 
 const mockFetchBodyParts = jest.fn();
-jest.mock("@/api/exercises/body-parts", () => {
+jest.mock("@/config/api/exercises/body-parts", () => {
     return {
         fetchBodyParts: () => mockFetchBodyParts()
     }

@@ -1,8 +1,8 @@
 
 import { Box, Flex, Heading, Text, Image, List, ListItem, Tabs, Grid, GridItem, TabList, Tab, TabPanels, TabPanel, OrderedList } from "@chakra-ui/react";
 import React from "react";
-import { formatTitle } from "@/app/utils/functions";
-import { ExerciseType } from "@/api/exercises/basic";
+import { formatTitle } from "@/config/utils/functions";
+import { ExerciseType } from "@/config/api/exercises/basic";
 interface AdvancedCardProps {
     exercise: ExerciseType
 }

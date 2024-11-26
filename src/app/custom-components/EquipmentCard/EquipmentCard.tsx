@@ -1,4 +1,4 @@
-import { formatTitle } from "@/app/utils/functions"
+import { formatTitle } from "@//config/utils/functions"
 import { Box, Checkbox, } from "@chakra-ui/react"
 import React from "react"
 

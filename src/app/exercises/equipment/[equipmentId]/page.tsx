@@ -3,15 +3,18 @@
 import { AdvancedCard } from "@/app/custom-components/AdvancedCard/AdvancedCard";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, Grid, Heading, Text } from "@chakra-ui/react";
 import Head from "next/head";
-import React, { use, useEffect, useState } from "react";
-import { fetchExerciseByEquipment } from "@/api/exercises/equipment";
-import { formatTitle, loadingState } from "@/app/utils/functions";
-import { ExerciseType } from "@/api/exercises/basic";
+import React, { useEffect, useState } from "react";
+import { fetchExerciseByEquipment } from "@/config/api/exercises/equipment";
+import { formatTitle, loadingState } from "@/config/utils/functions";
+import { ExerciseType } from "@/config/api/exercises/basic";
 
-export default function ExerciseByEquipmentPage(props: {
-    params: Promise<{ equipmentId: string }>
-}) {
-    const params = use(props.params);
+interface ExerciseByEquipmentPageProps {
+    params: {
+        equipmentId: string
+    }
+}
+
+export default function ExerciseByEquipmentPage({ params }: ExerciseByEquipmentPageProps) {
 
     const { equipmentId } = params
     const [error, setError] = useState(false)
@@ -20,7 +23,7 @@ export default function ExerciseByEquipmentPage(props: {
 
     const getExercisesByEquipment = async () => {
         try {
-            const data = await fetchExerciseByEquipment({ id: equipmentId })
+            const data = await fetchExerciseByEquipment({ id: equipmentId as string })
             setExerciseData(data)
         } catch (e) {
             console.error(e)
@@ -59,11 +62,11 @@ export default function ExerciseByEquipmentPage(props: {
                             </BreadcrumbLink>
                         </BreadcrumbItem>
                         <BreadcrumbItem isCurrentPage>
-                           <Text>{formatTitle({title: equipmentId})}</Text>
+                            <Text>{formatTitle({ title: equipmentId as string })}</Text>
                         </BreadcrumbItem>
                     </Breadcrumb>
                     <div className="flex items-center justify-center">
-                        <Heading size={"2xl"}>{formatTitle({title: equipmentId})} Exercises</Heading>
+                        <Heading size={"2xl"}>{formatTitle({ title: equipmentId as string })} Exercises</Heading>
                     </div>
                     <Grid p={10} alignContent={"center"} justifyContent={"center"}>
                         {isLoading && loadingState({ items: 4, grid: 12, colSpan: 12, width: "700px", height: "400px" })}
@@ -72,7 +75,7 @@ export default function ExerciseByEquipmentPage(props: {
                                 <Heading>There was an error while fetching data, please check the logs</Heading>
                             </div>)}
                         {exerciseData && exerciseData.length > 0 && exerciseData.map((exercise: ExerciseType) => {
-                            return <AdvancedCard key={exercise.id}  exercise={exercise} />
+                            return <AdvancedCard key={exercise.id} exercise={exercise} />
                         })}
                     </Grid>
                 </div>

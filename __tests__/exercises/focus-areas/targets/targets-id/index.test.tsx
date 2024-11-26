@@ -3,9 +3,17 @@ import { render, screen, waitFor } from "@testing-library/react";
 import Target from "@/app/exercises/focus-areas/targets/[targetId]/page"; 
 
 const mockFetchExercisesByTarget = jest.fn();
-jest.mock("@/api/exercises/target", () => ({
+jest.mock("@/config/api/exercises/target", () => ({
     fetchExercisesByTarget: () => mockFetchExercisesByTarget(),
 }));
+
+jest.mock("next/router", () => ({
+  useRouter: () => ({
+    query: {
+      targetId: "prctorals"
+    }
+  })
+}))
 
 
 
@@ -23,7 +31,7 @@ describe("Target Component", () => {
     mockFetchExercisesByTarget.mockResolvedValueOnce(mockExerciseData);
 
     await act(async () => {
-      render(<Target params={Promise.resolve({ targetId: "pectorals"})} />);
+      render(<Target params={{targetId: "pectorals"}} />);
     });
 
     waitFor(() => {
@@ -35,7 +43,7 @@ describe("Target Component", () => {
     mockFetchExercisesByTarget.mockResolvedValueOnce(mockExerciseData);
  
     await act(async () => {
-        render(<Target params={Promise.resolve({ targetId: "pectorals"})} />);
+        render(<Target params={{targetId: "pectorals"}} />);
     });
 
     await waitFor(() => {
@@ -50,7 +58,7 @@ describe("Target Component", () => {
     mockFetchExercisesByTarget.mockRejectedValueOnce(new Error("Fetch error"));
 
     await act(async () => {
-        render(<Target params={Promise.resolve({ targetId: "pectorals"})} />);
+        render(<Target params={{targetId: "pectorals"}} />);
     });
 
     await waitFor(() => {
@@ -64,7 +72,7 @@ describe("Target Component", () => {
     mockFetchExercisesByTarget.mockResolvedValueOnce([]);
 
     await act(async () => {
-        render(<Target params={Promise.resolve({ targetId: "pectorals"})} />);
+        render(<Target params={{targetId: "pectorals"}} />);
     });
 
 

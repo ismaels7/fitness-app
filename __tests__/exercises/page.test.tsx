@@ -1,7 +1,7 @@
 import React, { act } from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import ExercisesPage from "@/app/exercises/page";
-import { ExerciseType } from "@/api/exercises/basic";
+import { ExerciseType } from "@/config/api/exercises/basic";
 
 type ExercisesListType = {
     bodyPart: string,
@@ -37,13 +37,13 @@ const mockExercisesList: ExercisesListType[] = [
     }
 ]
 const mockFetchExercises = jest.fn()
-jest.mock("@/api/exercises/basic", () => {
+jest.mock("@/config/api/exercises/basic", () => {
     return {
         fetchExercises: () => mockFetchExercises(),
     }
 });
 
-jest.mock("@/app/utils/functions", () => ({
+jest.mock("@/config/utils/functions", () => ({
     loadingState: jest.fn(() => <div data-testid="loading-state">Loading...</div>),
 }));
 

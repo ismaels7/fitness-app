@@ -1,14 +1,14 @@
 "use client"
-import { fetchBodyParts } from "@/api/exercises/body-parts"
-import { fetchTargets } from "@/api/exercises/target"
+import { fetchBodyParts } from "@//config/api/exercises/body-parts"
+import { fetchTargets } from "@//config/api/exercises/target"
 import { Box, GridItem, Heading, VStack, Grid, Text } from "@chakra-ui/react"
 import Link from "next/link"
 import { useEffect, useState } from "react"
 
 import { useDisclosure } from '@chakra-ui/react'
-import { fetchEquipments } from "@/api/exercises/equipment"
+import { fetchEquipments } from "@//config/api/exercises/equipment"
 import React from "react"
-import { formatTitle, loadingState } from "@/app/utils/functions"
+import { formatTitle, loadingState } from "@//config/utils/functions"
 
 interface CategoryBannerProps {
     pathname: string,
@@ -138,8 +138,9 @@ export const CategoryBanner = ({ pathname }: CategoryBannerProps) => {
 
 
     return (
-         <Box className="gradient-background grid sm:grid-cols-4 lg:grid-cols-12 lgz-100" w='100%' gap={5} opacity={1} backgroundPosition={"center"} h={"100px"} alignItems={"center"} textAlign={"left"} color={"white"} paddingTop={"10px"} paddingInline={"30px"}>
-            <GridItem colSpan={{ base: 4, md: 2 }}>
+         <Box className="gradient-background" w='100%' gap={5} opacity={1} backgroundPosition={"center"} h={"100px"} textAlign={"left"} color={"white"} paddingTop={"10px"} paddingInline={"30px"}>
+            <Grid templateColumns='repeat(12, 1fr)' alignItems={"center"} >
+            <GridItem colSpan={{ base: 4, sm: 3, lg:2 }}>
                 <Link href={"/"}><Heading fontSize={{ base: "4xl", md: "5xl" }} mb={4}>FIT-Shape.</Heading></Link>
             </GridItem>
             <MenuWithDropdown element={{ name: "Exercises", url: "/exercises" }}>
@@ -164,6 +165,7 @@ export const CategoryBanner = ({ pathname }: CategoryBannerProps) => {
                 <Link key="equipment" href="/equipment"><Heading color={pathname.startsWith("/equipment") ? "cyan.500" : "white"}
                     marginTop={"5px"} _hover={{ color: 'cyan.700' }} fontSize={{ base: "lg", md: "xl" }} mb={4}>Equipment</Heading></Link>
             </GridItem>
+            </Grid>
         </Box>
     )
 }

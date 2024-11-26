@@ -1,23 +1,28 @@
 "use client"
-import { fetchExercisesByTarget } from "@/api/exercises/target";
+import { fetchExercisesByTarget } from "@/config/api/exercises/target";
 import { AdvancedCard } from "@/app/custom-components/AdvancedCard/AdvancedCard";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, Grid, Heading } from "@chakra-ui/react";
 import Head from "next/head";
-import React, { use, useEffect, useState } from "react";
-import { formatTitle, loadingState } from "@/app/utils/functions"
-import { ExerciseType } from "@/api/exercises/basic";
+import React, { useEffect, useState } from "react";
+import { formatTitle, loadingState } from "@/config/utils/functions"
+import { ExerciseType } from "@/config/api/exercises/basic";
 
+interface TargetPageProps {
+    params: {
+        targetId: string
+    }
+}
 
-export default function Target(props: { params: Promise<{ targetId: string }> }) {
-    const params = use(props.params);
-    const targetId = params.targetId
+export default function TargetPage({ params }: TargetPageProps) {
+
+    const { targetId } = params
     const [error, setError] = useState(false)
     const [isLoading, setIsLoading] = useState(true)
     const [targetExercises, setTargetExercises] = useState<ExerciseType[]>()
 
     const getExercisesBytarget = async () => {
         try {
-            const data = await fetchExercisesByTarget({ id: targetId })
+            const data = await fetchExercisesByTarget({ id: targetId as string })
             setTargetExercises(data)
         } catch (e) {
             console.error(e)
@@ -39,7 +44,7 @@ export default function Target(props: { params: Promise<{ targetId: string }> })
             </Head>
             <div className="pb-10">
                 <div className="items-center min-h-screen p-5">
-                <Breadcrumb data-testid="breadcrumb">
+                    <Breadcrumb data-testid="breadcrumb">
                         <BreadcrumbItem>
                             <BreadcrumbLink href='/'>
                                 Home
@@ -61,11 +66,11 @@ export default function Target(props: { params: Promise<{ targetId: string }> })
                             </BreadcrumbLink>
                         </BreadcrumbItem>
                         <BreadcrumbItem isCurrentPage>
-                            <BreadcrumbLink>{formatTitle({title: targetId})}</BreadcrumbLink>
+                            <BreadcrumbLink>{formatTitle({ title: targetId as string })}</BreadcrumbLink>
                         </BreadcrumbItem>
                     </Breadcrumb>
                     <div className="flex items-center justify-center">
-                    <Heading size={"2xl"}>{formatTitle({title: targetId})} Exercises</Heading>
+                        <Heading size={"2xl"}>{formatTitle({ title: targetId as string })} Exercises</Heading>
                     </div>
                     <Grid p={10} alignContent={"center"} justifyContent={"center"}>
                         {isLoading && loadingState({ items: 4, grid: 12, colSpan: 12, width: "700px", height: "400px" })}
